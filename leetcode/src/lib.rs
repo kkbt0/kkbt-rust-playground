@@ -4,9 +4,9 @@ mod qa {
         println!("\x1b[91m{}\x1b[0m", msg);
     }
     struct Solution;
-    // https://leetcode.cn/problems/count-number-of-homogenous-substrings/
-    // 1759. 统计同构子字符串的数目
     impl Solution {
+        // https://leetcode.cn/problems/count-number-of-homogenous-substrings/
+        // 1759. 统计同构子字符串的数目
         pub fn count_homogenous(s: String) -> i32 {
             let mut ans:i64 = 0;
             let mut count = 0;
