@@ -6,3 +6,5 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+# kkbt = { git="https://gitee.com/kkbt/rust-kkbt", rev = "3c5226f" }
+kkbt = { path="../rust-kkbt"}

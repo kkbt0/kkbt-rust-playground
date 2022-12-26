@@ -5,7 +5,10 @@ version = 3
 [[package]]
 name = "entry"
 version = "0.1.0"
+dependencies = [
+ "kkbt",
+]
 
 [[package]]
-name = "leetcode"
-version = "0.1.0"
+name = "kkbt"
+version = "0.1.2"
