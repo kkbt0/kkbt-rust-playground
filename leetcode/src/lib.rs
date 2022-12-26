@@ -25,11 +25,10 @@ mod qa {
         }
         // https://leetcode.cn/problems/count-number-of-homogenous-substrings/solution/by-kyushu-e5bb/
         pub fn count_homogenous2(s: String) -> i32 {
-            let x = s.as_bytes().windows(2);
-            println!("{:?}",x);
             s.as_bytes()
                 .windows(2)
                 .fold((1, 1), |(cnt, ret), ch| {
+                    println!("{} {} : {} {}", ch[0] ,ch[1], cnt, ret);
                     if ch[0] == ch[1] {
                         (cnt + 1, (ret + cnt + 1) % 1_000_000_007)
                     } else {
@@ -43,9 +42,9 @@ mod qa {
     #[test]
     fn test_count_homogenous() {
         // let str = String::from("zzzzz"); // 5 4 3 2 1 // (num+1)*num/2
-        assert_eq!(Solution::count_homogenous(String::from("zzzzz")), 15);
+        assert_eq!(Solution::count_homogenous2(String::from("zzzzz")), 15);
         assert_eq!(Solution::count_homogenous(String::from("abbcccaa")), 13); // a bb ccc aaa
-        assert_eq!(Solution::count_homogenous2(String::from("xy")), 2);
+        assert_eq!(Solution::count_homogenous(String::from("xy")), 2);
     }
     // Test Solution
     fn test_add() -> i32 {
