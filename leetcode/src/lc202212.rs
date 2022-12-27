@@ -79,8 +79,8 @@ mod lc202212 {
     }
     #[test]
     fn test_minimum_moves() {
-        dbg!(Solution::minimum_moves(String::from("XXX")));
-        dbg!(Solution::minimum_moves(String::from("XXOX")));
-        dbg!(Solution::minimum_moves(String::from("OOOO")));
+        assert_eq!(Solution::minimum_moves(String::from("XXX")),1);
+        assert_eq!(Solution::minimum_moves(String::from("XXOX")),2);
+        assert_eq!(Solution::minimum_moves(String::from("OOOO")),0);
     }
 }
