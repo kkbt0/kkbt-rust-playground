@@ -1,6 +1,7 @@
 #[allow(dead_code)]
 mod lc202212 {
     struct Solution;
+    // 2022-12-26
     // https://leetcode.cn/problems/count-number-of-homogenous-substrings/
     // 1759. 统计同构子字符串的数目
     impl Solution {
@@ -43,6 +44,7 @@ mod lc202212 {
         assert_eq!(Solution::count_homogenous(String::from("abbcccaa")), 13); // a bb ccc aaa
         assert_eq!(Solution::count_homogenous(String::from("xy")), 2);
     }
+    // 2022-12-27
     // https://leetcode.cn/problems/minimum-moves-to-convert-string/
     // 2027. 转换字符串的最少操作次数
     impl Solution {
@@ -82,5 +84,31 @@ mod lc202212 {
         assert_eq!(Solution::minimum_moves(String::from("XXX")),1);
         assert_eq!(Solution::minimum_moves(String::from("XXOX")),2);
         assert_eq!(Solution::minimum_moves(String::from("OOOO")),0);
+    }
+    // 2022-12-28
+    // https://leetcode.cn/problems/minimum-length-of-string-after-deleting-similar-ends/
+    // 1750. 删除字符串两端相同字符后的最短长度
+    impl Solution {
+        pub fn minimum_length(s: String) -> i32 {
+            let s = s.as_bytes();
+            let (mut left, mut right) = (0, s.len()-1);
+            while left < right && s[left] == s[right] {
+                let same_char = s[left];
+                while left <= right && s[left] == same_char {
+                    left += 1;
+                }
+                while left<=right && s[right] == same_char {
+                    right -= 1;
+                }
+            }
+            right as i32 - left as i32+ 1
+        }
+    }
+    #[test]
+    fn test_minimum_length() {
+        //dbg!(Solution::minimum_length(String::from("ca")));
+        assert_eq!(Solution::minimum_length(String::from("ca")), 2);
+        assert_eq!(Solution::minimum_length(String::from("cabaabac")), 0);
+        assert_eq!(Solution::minimum_length(String::from("aabccabba")),3);
     }
 }
