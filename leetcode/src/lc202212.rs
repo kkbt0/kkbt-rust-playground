@@ -2,8 +2,8 @@
 mod lc202212 {
     struct Solution;
     // 2022-12-26
-    // https://leetcode.cn/problems/count-number-of-homogenous-substrings/
     // 1759. 统计同构子字符串的数目
+    // https://leetcode.cn/problems/count-number-of-homogenous-substrings/
     impl Solution {
         pub fn count_homogenous(s: String) -> i32 {
             let mut ans: i64 = 0;
@@ -45,8 +45,8 @@ mod lc202212 {
         assert_eq!(Solution::count_homogenous(String::from("xy")), 2);
     }
     // 2022-12-27
-    // https://leetcode.cn/problems/minimum-moves-to-convert-string/
     // 2027. 转换字符串的最少操作次数
+    // https://leetcode.cn/problems/minimum-moves-to-convert-string/
     impl Solution {
         pub fn minimum_moves(s: String) -> i32 {
             // X 88 O 79
@@ -86,8 +86,8 @@ mod lc202212 {
         assert_eq!(Solution::minimum_moves(String::from("OOOO")),0);
     }
     // 2022-12-28
-    // https://leetcode.cn/problems/minimum-length-of-string-after-deleting-similar-ends/
     // 1750. 删除字符串两端相同字符后的最短长度
+    // https://leetcode.cn/problems/minimum-length-of-string-after-deleting-similar-ends/
     impl Solution {
         pub fn minimum_length(s: String) -> i32 {
             let s = s.as_bytes();
