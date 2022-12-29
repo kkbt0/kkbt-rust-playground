@@ -111,4 +111,41 @@ mod lc202212 {
         assert_eq!(Solution::minimum_length(String::from("cabaabac")), 0);
         assert_eq!(Solution::minimum_length(String::from("aabccabba")),3);
     }
+    // 2022-12-29
+    // 2032. 至少在两个数组中出现的值
+    // https://leetcode.cn/problems/two-out-of-three/
+    use std::collections::HashSet;
+    impl Solution {
+        pub fn two_out_of_three(nums1: Vec<i32>, nums2: Vec<i32>, nums3: Vec<i32>) -> Vec<i32> {
+            // let set: HashSet<i32> = v.into_iter().collect::<HashSet<i32>>();
+            // let set1: HashSet<i32> = v1.iter().map(|x| *x).collect();
+            // let hs1:HashSet<i32> = HashSet::from_iter(nums1.into_iter());
+            let hs1: HashSet<i32> = nums1.iter().map(|x| *x).collect();
+            let hs2: HashSet<i32> = nums2.iter().map(|x| *x).collect();
+            let hs3: HashSet<i32> = nums3.iter().map(|x| *x).collect();
+            let mut dp:[i32;105] = [0; 105];
+            for i in hs1.iter() {
+                dp[*i as usize] += 1;
+            }
+            for i in hs2.iter() {
+                dp[*i as usize] += 1;
+            }
+            for i in hs3.iter() {
+                dp[*i as usize] += 1;
+            }
+            let mut ans = vec![];
+            for i in 0..105 {
+                if dp[i] >= 2  {
+                    ans.push(i as i32);
+                }
+            }
+            ans
+        }
+    }
+    #[test]
+    fn test_two_out_of_three() {
+        assert_eq!(Solution::two_out_of_three(vec![1,1,3,2], vec![2,3], vec![3]),vec![2,3]);
+        assert_eq!(Solution::two_out_of_three(vec![3,1], vec![2,3], vec![1,2]),vec![1,2,3]);
+        assert_eq!(Solution::two_out_of_three(vec![1,2,2], vec![4,3,3], vec![5]),vec![]);
+    }
 }
