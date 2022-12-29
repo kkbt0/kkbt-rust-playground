@@ -1,0 +1,4 @@
+(function() {var implementors = {
+"kkbt":[["impl&lt;'a&gt; Freeze for <a class=\"struct\" href=\"kkbt/struct.SKV.html\" title=\"struct kkbt::SKV\">SKV</a>&lt;'a&gt;",1,["kkbt::skv::SKV"]]],
+"leetcode":[["impl Freeze for <a class=\"struct\" href=\"leetcode/lc202212/struct.Solution.html\" title=\"struct leetcode::lc202212::Solution\">Solution</a>",1,["leetcode::lc202212::Solution"]],["impl Freeze for <a class=\"struct\" href=\"leetcode/lc202212ap/struct.Solution.html\" title=\"struct leetcode::lc202212ap::Solution\">Solution</a>",1,["leetcode::lc202212ap::Solution"]],["impl Freeze for <a class=\"struct\" href=\"leetcode/lc202212ap/struct.ListNode.html\" title=\"struct leetcode::lc202212ap::ListNode\">ListNode</a>",1,["leetcode::lc202212ap::ListNode"]]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
