@@ -77,3 +77,24 @@ fn test_add_two_numbers() {
 
     assert_eq!(left, right);
 }
+
+/// 2022-12-29  
+/// 70. 爬楼梯  
+/// <https://leetcode.cn/problems/climbing-stairs/>
+impl Solution {
+    pub fn climb_stairs(n: i32) -> i32 {
+        let mut dp:[i32;45] = [0;45];
+        dp[0]=1;
+        dp[1]=2;
+        for i in 2..n as usize {
+            dp[i]=dp[i-1]+dp[i-2];
+        }
+        dp[n as usize -1]
+    }
+}
+#[test]
+fn test_climb_stairs() {
+    assert_eq!(Solution::climb_stairs(1), 1);
+    assert_eq!(Solution::climb_stairs(2), 2);
+    assert_eq!(Solution::climb_stairs(3), 3);
+}
