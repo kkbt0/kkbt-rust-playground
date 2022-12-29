@@ -7,5 +7,6 @@ for leetcode or other rust code test
 [docs README](docs/README.md)
 
 ```bash
-cargo doc && python3 -m http.server 8080 --bind 127.0.0.1 --directory target/doc/ 
+./tools.sh doc
+./tools.sh test-ap test_roman_to_int
 ```
