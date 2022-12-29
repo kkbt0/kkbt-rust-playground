@@ -1,3 +1,4 @@
+// use for leetcode daily problem
 #[allow(dead_code)]
 mod lc202212 {
     struct Solution;
@@ -81,9 +82,9 @@ mod lc202212 {
     }
     #[test]
     fn test_minimum_moves() {
-        assert_eq!(Solution::minimum_moves(String::from("XXX")),1);
-        assert_eq!(Solution::minimum_moves(String::from("XXOX")),2);
-        assert_eq!(Solution::minimum_moves(String::from("OOOO")),0);
+        assert_eq!(Solution::minimum_moves(String::from("XXX")), 1);
+        assert_eq!(Solution::minimum_moves(String::from("XXOX")), 2);
+        assert_eq!(Solution::minimum_moves(String::from("OOOO")), 0);
     }
     // 2022-12-28
     // 1750. 删除字符串两端相同字符后的最短长度
@@ -91,17 +92,17 @@ mod lc202212 {
     impl Solution {
         pub fn minimum_length(s: String) -> i32 {
             let s = s.as_bytes();
-            let (mut left, mut right) = (0, s.len()-1);
+            let (mut left, mut right) = (0, s.len() - 1);
             while left < right && s[left] == s[right] {
                 let same_char = s[left];
                 while left <= right && s[left] == same_char {
                     left += 1;
                 }
-                while left<=right && s[right] == same_char {
+                while left <= right && s[right] == same_char {
                     right -= 1;
                 }
             }
-            right as i32 - left as i32+ 1
+            right as i32 - left as i32 + 1
         }
     }
     #[test]
@@ -109,7 +110,7 @@ mod lc202212 {
         //dbg!(Solution::minimum_length(String::from("ca")));
         assert_eq!(Solution::minimum_length(String::from("ca")), 2);
         assert_eq!(Solution::minimum_length(String::from("cabaabac")), 0);
-        assert_eq!(Solution::minimum_length(String::from("aabccabba")),3);
+        assert_eq!(Solution::minimum_length(String::from("aabccabba")), 3);
     }
     // 2022-12-29
     // 2032. 至少在两个数组中出现的值
@@ -123,7 +124,7 @@ mod lc202212 {
             let hs1: HashSet<i32> = nums1.iter().map(|x| *x).collect();
             let hs2: HashSet<i32> = nums2.iter().map(|x| *x).collect();
             let hs3: HashSet<i32> = nums3.iter().map(|x| *x).collect();
-            let mut dp:[i32;105] = [0; 105];
+            let mut dp: [i32; 105] = [0; 105];
             for i in hs1.iter() {
                 dp[*i as usize] += 1;
             }
@@ -135,7 +136,7 @@ mod lc202212 {
             }
             let mut ans = vec![];
             for i in 0..105 {
-                if dp[i] >= 2  {
+                if dp[i] >= 2 {
                     ans.push(i as i32);
                 }
             }
@@ -144,8 +145,17 @@ mod lc202212 {
     }
     #[test]
     fn test_two_out_of_three() {
-        assert_eq!(Solution::two_out_of_three(vec![1,1,3,2], vec![2,3], vec![3]),vec![2,3]);
-        assert_eq!(Solution::two_out_of_three(vec![3,1], vec![2,3], vec![1,2]),vec![1,2,3]);
-        assert_eq!(Solution::two_out_of_three(vec![1,2,2], vec![4,3,3], vec![5]),vec![]);
+        assert_eq!(
+            Solution::two_out_of_three(vec![1, 1, 3, 2], vec![2, 3], vec![3]),
+            vec![2, 3]
+        );
+        assert_eq!(
+            Solution::two_out_of_three(vec![3, 1], vec![2, 3], vec![1, 2]),
+            vec![1, 2, 3]
+        );
+        assert_eq!(
+            Solution::two_out_of_three(vec![1, 2, 2], vec![4, 3, 3], vec![5]),
+            vec![]
+        );
     }
 }
