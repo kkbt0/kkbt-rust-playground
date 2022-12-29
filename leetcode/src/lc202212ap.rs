@@ -82,14 +82,15 @@ fn test_add_two_numbers() {
 /// 70. 爬楼梯  
 /// <https://leetcode.cn/problems/climbing-stairs/>
 impl Solution {
+    /// dp
     pub fn climb_stairs(n: i32) -> i32 {
-        let mut dp:[i32;45] = [0;45];
-        dp[0]=1;
-        dp[1]=2;
+        let mut dp: [i32; 45] = [0; 45];
+        dp[0] = 1;
+        dp[1] = 2;
         for i in 2..n as usize {
-            dp[i]=dp[i-1]+dp[i-2];
+            dp[i] = dp[i - 1] + dp[i - 2];
         }
-        dp[n as usize -1]
+        dp[n as usize - 1]
     }
 }
 #[test]
@@ -97,4 +98,69 @@ fn test_climb_stairs() {
     assert_eq!(Solution::climb_stairs(1), 1);
     assert_eq!(Solution::climb_stairs(2), 2);
     assert_eq!(Solution::climb_stairs(3), 3);
+}
+/// 2022-12-29  
+/// 13. 罗马数字转整数
+/// <https://leetcode.cn/problems/roman-to-integer/>
+impl Solution {
+    pub fn roman_to_int(s: String) -> i32 {
+        let mut vec = Vec::new();
+        let byte = s.as_bytes();
+        for bchar in byte {
+            match bchar {
+                b'I' => vec.push(1),
+                b'V' => vec.push(5),
+                b'X' => vec.push(10),
+                b'L' => vec.push(50),
+                b'C' => vec.push(100),
+                b'D' => vec.push(500),
+                b'M' => vec.push(1000),
+                _ => {}
+            }
+        }
+        let sub = byte.windows(2).fold(0, |mut acc, x| {
+            match (x[0], x[1]) {
+                (b'I', b'V') => acc -= 2,
+                (b'I', b'X') => acc -= 2,
+                (b'X', b'L') => acc -= 20,
+                (b'X', b'C') => acc -= 20,
+                (b'C', b'D') => acc -= 200,
+                (b'C', b'M') => acc -= 200,
+                _ => {}
+            }
+            acc
+        });
+        vec.iter().sum::<i32>() + sub
+    }
+    /// 模式匹配  
+    /// <https://leetcode.cn/problems/roman-to-integer/solution/mo-shi-pi-pei-fold-zhi-jie-guo-by-howyea-fn9y/>
+    pub fn roman_to_int2(s: String) -> i32 {
+        s.chars()
+            .fold((0, ' '), |res, ch| match (res.1, ch) {
+                ('I', 'V') => (res.0 + 3, 'V'),
+                ('I', 'X') => (res.0 + 8, 'X'),
+                ('X', 'L') => (res.0 + 30, 'L'),
+                ('X', 'C') => (res.0 + 80, 'C'),
+                ('C', 'D') => (res.0 + 300, 'D'),
+                ('C', 'M') => (res.0 + 800, 'M'),
+                (_, 'I') => (res.0 + 1, 'I'),
+                (_, 'V') => (res.0 + 5, 'V'),
+                (_, 'X') => (res.0 + 10, 'X'),
+                (_, 'L') => (res.0 + 50, 'L'),
+                (_, 'C') => (res.0 + 100, 'C'),
+                (_, 'D') => (res.0 + 500, 'D'),
+                (_, 'M') => (res.0 + 1000, 'M'),
+                (_, _) => unreachable!(),
+            })
+            .0
+    }
+}
+#[test]
+fn test_roman_to_int() {
+    // dbg!(Solution::roman_to_int("III".to_string()));
+    // dbg!(Solution::roman_to_int("IV".to_string()));
+    assert_eq!(Solution::roman_to_int("III".to_string()), 3);
+    assert_eq!(Solution::roman_to_int("IV".to_string()), 4);
+    assert_eq!(Solution::roman_to_int("LVIII".to_string()), 58);
+    assert_eq!(Solution::roman_to_int("MCMXCIV".to_string()), 1994);
 }
