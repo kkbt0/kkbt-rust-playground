@@ -2,6 +2,11 @@
 
 [https://cheats.rs/](https://cheats.rs/)
 
+index.html 
+```html
+<meta http-equiv='refresh' content='0; url=/leetcode'>
+```
+
 ## Rust 常用处理
 
 ```rust
