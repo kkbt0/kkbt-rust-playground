@@ -2,6 +2,9 @@
 name = "leetcode"
 version = "0.1.0"
 edition = "2021"
+authors = ["恐咖兵糖 <0@ftls.xyz>"]
+description = "个人 LeetCode 练习代码"
+repository = "https://gitee.com/kkbt/rust-play-ground"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

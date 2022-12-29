@@ -1,3 +1,7 @@
+//! 这个 Crate 用于存储我个人的 leetcode 代码  
+//! Gitee Repository <https://gitee.com/kkbt/rust-play-ground>  
+//! by [恐咖兵糖](https://www.ftls.xyz)
+
 pub mod lc202212;
 pub mod lc202212ap;
 
