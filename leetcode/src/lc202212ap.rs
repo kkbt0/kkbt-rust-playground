@@ -165,3 +165,108 @@ fn test_roman_to_int() {
     assert_eq!(Solution::roman_to_int("LVIII".to_string()), 58);
     assert_eq!(Solution::roman_to_int("MCMXCIV".to_string()), 1994);
 }
+/// 2022-12-30  
+/// 21. 合并两个有序链表  
+/// <https://leetcode.cn/problems/merge-two-sorted-lists/>  
+impl Solution {
+    pub fn merge_two_lists(
+        mut list1: Option<Box<ListNode>>,
+        mut list2: Option<Box<ListNode>>,
+    ) -> Option<Box<ListNode>> {
+        let mut head_node = ListNode::new(0);
+        let mut node = &mut head_node;
+        while let (Some(l1), Some(l2)) = (list1.as_ref(), list2.as_ref()) {
+            if l1.val < l2.val {
+                node.next = list1; // head(no meaning).next -> list1
+                node = node.next.as_mut().unwrap(); // node = list1.next 指向 list1 第一项
+                list1 = node.next.take(); // node 指向 list1 第二项
+            } else {
+                node.next = list2;
+                node = node.next.as_mut().unwrap();
+                list2 = node.next.take();
+            }
+        }
+        node.next = if list1.is_some() { list1 } else { list2 };
+        head_node.next
+    }
+    /// <https://leetcode.cn/problems/merge-two-sorted-lists/solution/rust-by-tryfor_-23/>
+    pub fn merge_two_lists3(
+        mut l1: Option<Box<ListNode>>,
+        mut l2: Option<Box<ListNode>>,
+    ) -> Option<Box<ListNode>> {
+        let mut l3 = ListNode::new(0);
+        let mut ptr3 = &mut l3;
+        while let (Some(n1), Some(n2)) = (l1.as_ref(), l2.as_ref()) {
+            if n1.val < n2.val {
+                //将较小链表连接到新链表尾节点，所有权移动
+                ptr3.next = l1;
+                //将l3尾节点指向它的后继节点
+                ptr3 = ptr3.next.as_mut().unwrap();
+                //将链表从尾节点取下来，将所有权返给较小的链表
+                l1 = ptr3.next.take();
+            } else {
+                //同上面的逻辑
+                ptr3.next = l2;
+                ptr3 = ptr3.next.as_mut().unwrap();
+                l2 = ptr3.next.take();
+            }
+        }
+        //剩余部分
+        ptr3.next = if l1.is_some() { l1 } else { l2 };
+        l3.next
+    }
+    /// 递归方法  <https://leetcode.cn/problems/merge-two-sorted-lists/solution/rust-di-gui-he-bing-shuang-lian-biao-by-sniper_mar/>
+    pub fn merge_two_lists2(
+        list1: Option<Box<ListNode>>,
+        list2: Option<Box<ListNode>>,
+    ) -> Option<Box<ListNode>> {
+        match (list1, list2) {
+            (None, None) => None,
+            (None, r) => r,
+            (l, None) => l,
+            (Some(mut l), Some(mut r)) => {
+                if l.val <= r.val {
+                    l.next = Self::merge_two_lists2(l.next, Some(r));
+                    Some(l)
+                } else {
+                    r.next = Self::merge_two_lists2(Some(l), r.next);
+                    Some(r)
+                }
+            }
+        }
+    }
+}
+
+#[test]
+fn test_merge_two_lists() {
+    // 输入：l1 = [1,2,4], l2 = [1,3,4]
+    // 输出：[1,1,2,3,4,4]
+    let l1_3 = ListNode::new(4);
+    let mut l1_2 = ListNode::new(2);
+    let mut l1_1 = ListNode::new(1);
+    l1_2.next = Some(Box::new(l1_3));
+    l1_1.next = Some(Box::new(l1_2));
+
+    let l2_3 = ListNode::new(4);
+    let mut l2_2 = ListNode::new(3);
+    let mut l2_1 = ListNode::new(1);
+    l2_2.next = Some(Box::new(l2_3));
+    l2_1.next = Some(Box::new(l2_2));
+
+    let l3_6 = ListNode::new(4);
+    let mut l3_5 = ListNode::new(4);
+    let mut l3_4 = ListNode::new(3);
+    let mut l3_3 = ListNode::new(2);
+    let mut l3_2 = ListNode::new(1);
+    let mut l3_1 = ListNode::new(1);
+    l3_5.next = Some(Box::new(l3_6));
+    l3_4.next = Some(Box::new(l3_5));
+    l3_3.next = Some(Box::new(l3_4));
+    l3_2.next = Some(Box::new(l3_3));
+    l3_1.next = Some(Box::new(l3_2));
+
+    let left = Solution::merge_two_lists2(Some(Box::new(l1_1)), Some(Box::new(l2_1)));
+    let right = Some(Box::new(l3_1));
+
+    assert_eq!(left, right);
+}
