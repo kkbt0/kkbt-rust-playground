@@ -270,3 +270,20 @@ fn test_merge_two_lists() {
 
     assert_eq!(left, right);
 }
+/// 2022-12-30  
+/// 35. 搜索插入位置  
+/// <https://leetcode.cn/problems/search-insert-position/>
+impl Solution {
+    /// 正常是二分查找。不过 Rust 有库
+    pub fn search_insert(nums: Vec<i32>, target: i32) -> i32 {
+        nums.binary_search(&target).unwrap_or_else(|x| x) as i32
+    }
+}
+#[test]
+fn test_search_insert() {
+    // dbg!(Solution::search_insert(vec![1,3,5,6],5));
+    assert_eq!(Solution::search_insert(vec![1, 3, 5, 6], 5), 2);
+    assert_eq!(Solution::search_insert(vec![1, 3, 5, 6], 2), 1);
+    assert_eq!(Solution::search_insert(vec![1, 3, 5, 6], 7), 4);
+    // TODO
+}
