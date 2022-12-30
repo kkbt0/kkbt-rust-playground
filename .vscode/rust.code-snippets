@@ -19,7 +19,7 @@
 		"prefix": "rlc",
         "body": [
 			"/// $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE  ",
-			"/// Description  \n/// <https://www.ftls.xyz>",
+			"/// Description  \n/// <https>",
 			"impl Solution {\n\t/// Code_Description\n\tpub fn solve() {",
 			"\t\t// TODO\n\t}\n}",
 			"#[test]\nfn test() {\n\tdbg!(Solution::solve());\n\t// assert_eq!(Solution::solve(),\"output\");\n\t// TODO\n}",
