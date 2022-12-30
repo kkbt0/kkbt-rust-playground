@@ -270,6 +270,23 @@
 <a href="#270" id="270">270</a>
 <a href="#271" id="271">271</a>
 <a href="#272" id="272">272</a>
+<a href="#273" id="273">273</a>
+<a href="#274" id="274">274</a>
+<a href="#275" id="275">275</a>
+<a href="#276" id="276">276</a>
+<a href="#277" id="277">277</a>
+<a href="#278" id="278">278</a>
+<a href="#279" id="279">279</a>
+<a href="#280" id="280">280</a>
+<a href="#281" id="281">281</a>
+<a href="#282" id="282">282</a>
+<a href="#283" id="283">283</a>
+<a href="#284" id="284">284</a>
+<a href="#285" id="285">285</a>
+<a href="#286" id="286">286</a>
+<a href="#287" id="287">287</a>
+<a href="#288" id="288">288</a>
+<a href="#289" id="289">289</a>
 </pre><pre class="rust"><code><span class="doccomment">//! 用于 leetcode 所有问题 非每日一题
 </span><span class="attr">#[allow(dead_code)]
 </span><span class="kw">pub struct </span>Solution;
@@ -542,5 +559,22 @@
 
     <span class="macro">assert_eq!</span>(left, right);
 }
+<span class="doccomment">/// 2022-12-30  
+/// 35. 搜索插入位置  
+/// &lt;https://leetcode.cn/problems/search-insert-position/&gt;
+</span><span class="kw">impl </span>Solution {
+    <span class="doccomment">/// 正常是二分查找。不过 Rust 有库
+    </span><span class="kw">pub fn </span>search_insert(nums: Vec&lt;i32&gt;, target: i32) -&gt; i32 {
+        nums.binary_search(<span class="kw-2">&amp;</span>target).unwrap_or_else(|x| x) <span class="kw">as </span>i32
+    }
+}
+<span class="attr">#[test]
+</span><span class="kw">fn </span>test_search_insert() {
+    <span class="comment">// dbg!(Solution::search_insert(vec![1,3,5,6],5));
+    </span><span class="macro">assert_eq!</span>(Solution::search_insert(<span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">6</span>], <span class="number">5</span>), <span class="number">2</span>);
+    <span class="macro">assert_eq!</span>(Solution::search_insert(<span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">6</span>], <span class="number">2</span>), <span class="number">1</span>);
+    <span class="macro">assert_eq!</span>(Solution::search_insert(<span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">6</span>], <span class="number">7</span>), <span class="number">4</span>);
+    <span class="comment">// TODO
+</span>}
 </code></pre></div>
 </section></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="leetcode" data-themes="" data-resource-suffix="" data-rustdoc-version="1.68.0-nightly (8dfb33954 2022-12-25)" data-search-js="search-181581080540673f.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-58836c674e2f7bd2.css" ></div></body></html>
