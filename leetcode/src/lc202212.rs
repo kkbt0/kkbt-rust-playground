@@ -1,4 +1,5 @@
 //! 用于每日一题
+/// 通用 Solution
 #[allow(dead_code)]
 pub struct Solution;
 /// 2022-12-26  
@@ -159,4 +160,95 @@ fn test_two_out_of_three() {
         Solution::two_out_of_three(vec![1, 2, 2], vec![4, 3, 3], vec![5]),
         vec![]
     );
+}
+use std::collections::BTreeSet;
+/// 2022-12-30  
+/// 855. 考场就座  
+/// <https://leetcode.cn/problems/exam-room/>  
+/// 令人迷惑的一道题
+pub struct ExamRoom {
+    set: BTreeSet<i32>,
+    cap: i32,
+}
+#[allow(dead_code)]
+impl ExamRoom {
+    fn new(n: i32) -> Self {
+        ExamRoom {
+            set: BTreeSet::new(),
+            cap: n,
+        }
+    }
+
+    fn seat(&mut self) -> i32 {
+        let (mut left, mut right) = (0, self.cap - 1);
+        if self.set.len() == 0 {
+            self.set.insert(0);
+            return 0;
+        } else {
+            // size <=1
+            if self.set.len() == 1 && self.set.contains(&left) {
+                self.set.insert(right);
+                return right;
+            } else if self.set.len() == 1 && self.set.contains(&right) {
+                self.set.insert(left);
+                return left;
+            } else if self.set.len() == 1 {
+                for iter in self.set.iter() {
+                    if (*iter - left) < (right - *iter) {
+                        self.set.insert(right);
+                        return right;
+                    }
+                }
+            }
+            // size >=2
+            let mut pre = 0;
+            let mut max_len = 0;
+            for (index, val) in self.set.iter().enumerate() {
+                // 第一个元素
+                if index == 0 {
+                    pre = *val;
+                    max_len = pre - left;
+                    continue;
+                }
+                else { // 3 4
+                    if *val - pre > max_len {
+                        max_len = pre - left;
+                        left = pre;
+                        right = *val;
+                    }
+                }
+                pre = *val;
+            }
+            if !self.set.contains(&(self.cap as i32 - 1)) {
+                if (self.cap as i32 - 1) - pre > max_len {
+                    //
+                    // max_len = right - pre;
+                    left = pre;
+                    right = self.cap as i32 - 1;
+                }
+            }
+        }
+        self.set.insert((right + left) / 2 as i32);
+        (right + left) / 2 as i32
+    }
+    fn leave(&mut self, p: i32) {
+        self.set.remove(&p);
+    }
+}
+#[test]
+fn test_exam_room() {
+    let mut room = ExamRoom::new(10);
+    dbg!(room.seat()); // 0
+    println!("\x1b[91mNow Seat Status: {:?}\x1b[0m", room.set);
+    dbg!(room.seat()); // 9
+    println!("\x1b[91mNow Seat Status: {:?}\x1b[0m", room.set);
+    dbg!(room.seat()); // 4
+    println!("\x1b[91mNow Seat Status: {:?}\x1b[0m", room.set);
+    dbg!(room.seat()); // 2
+    println!("\x1b[91mNow Seat Status: {:?}\x1b[0m", room.set);
+    dbg!(room.leave(4)); // ()
+    println!("\x1b[91mNow Seat Status: {:?}\x1b[0m", room.set);
+    dbg!(room.seat()); // 5
+    println!("\x1b[91mNow Seat Status: {:?}\x1b[0m", room.set);
+   // 0 _ _ _ 4 _ _ _ _ _ 9 ??? why not 6 is 2
 }
