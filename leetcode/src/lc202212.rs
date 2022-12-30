@@ -209,8 +209,8 @@ impl ExamRoom {
                     pre = *val;
                     max_len = pre - left;
                     continue;
-                }
-                else { // 3 4
+                } else {
+                    // 3 4
                     if *val - pre > max_len {
                         max_len = pre - left;
                         left = pre;
@@ -250,5 +250,5 @@ fn test_exam_room() {
     println!("\x1b[91mNow Seat Status: {:?}\x1b[0m", room.set);
     dbg!(room.seat()); // 5
     println!("\x1b[91mNow Seat Status: {:?}\x1b[0m", room.set);
-   // 0 _ _ _ 4 _ _ _ _ _ 9 ??? why not 6 is 2
+    // 0 _ _ _ 4 _ _ _ _ _ 9 ??? why not 6 is 2
 }
