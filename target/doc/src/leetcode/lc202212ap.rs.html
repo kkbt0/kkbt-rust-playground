@@ -336,6 +336,9 @@
 <a href="#336" id="336">336</a>
 <a href="#337" id="337">337</a>
 <a href="#338" id="338">338</a>
+<a href="#339" id="339">339</a>
+<a href="#340" id="340">340</a>
+<a href="#341" id="341">341</a>
 </pre><pre class="rust"><code><span class="doccomment">//! 用于 leetcode 所有问题 非每日一题
 </span><span class="attr">#[allow(dead_code)]
 </span><span class="kw">pub struct </span>Solution;
@@ -625,8 +628,8 @@
     <span class="macro">assert_eq!</span>(Solution::search_insert(<span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">6</span>], <span class="number">7</span>), <span class="number">4</span>);
     <span class="comment">// TODO
 </span>}
-<span class="kw">use </span>std::collections::HashSet;
 <span class="kw">use </span>std::cmp::max;
+<span class="kw">use </span>std::collections::HashSet;
 <span class="doccomment">/// 2022-12-30  
 /// 3. 无重复字符的最长子串  
 /// &lt;https://leetcode.cn/problems/longest-substring-without-repeating-characters/?favorite=2cktkvj&gt;
@@ -635,21 +638,24 @@
     <span class="doccomment">/// 滑动窗口
     </span><span class="kw">pub fn </span>length_of_longest_substring(s: String) -&gt; i32 {
         <span class="kw">let </span>s = s.as_bytes();
-        <span class="kw">if </span>s.len() == <span class="number">1 </span>{ <span class="kw">return </span><span class="number">1</span>;}
+        <span class="kw">if </span>s.len() == <span class="number">1 </span>{
+            <span class="kw">return </span><span class="number">1</span>;
+        }
         <span class="kw">let </span><span class="kw-2">mut </span>max_len = <span class="number">0</span>;
         <span class="kw">let </span><span class="kw-2">mut </span>left = <span class="number">0</span>;
         <span class="kw">let </span><span class="kw-2">mut </span>set = HashSet::new();
         <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..s.len() {
             <span class="kw">if </span>set.contains(<span class="kw-2">&amp;</span>s[i]) {
                 max_len = max(max_len, set.len());
-                <span class="kw">loop </span>{ <span class="comment">// pwwkew
+                <span class="kw">loop </span>{
+                    <span class="comment">// pwwkew
                     </span><span class="kw">if </span>set.contains(<span class="kw-2">&amp;</span>s[left]) {
-                        <span class="macro">println!</span>(<span class="string">&quot;{:?}&quot;</span>,set);
+                        <span class="macro">println!</span>(<span class="string">&quot;{:?}&quot;</span>, set);
                         left += <span class="number">1</span>;
                         <span class="kw">break</span>;
                     } <span class="kw">else </span>{
                         <span class="kw">let </span>x = set.remove(<span class="kw-2">&amp;</span>s[left]);
-                        <span class="macro">println!</span>(<span class="string">&quot;{}&quot;</span>,x);
+                        <span class="macro">println!</span>(<span class="string">&quot;{}&quot;</span>, x);
                         left += <span class="number">1</span>;
                     }
                 }
