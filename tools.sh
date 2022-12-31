@@ -11,6 +11,9 @@ case $1 in
     docr)
         cargo doc
         echo "<meta http-equiv='refresh' content='0; url=/leetcode'>" > target/doc/index.html 
+        # --- for Windows WSL2 Begin ---
+        explorer.exe file://wsl.localhost/Ubuntu/home/kkbt/PlayGround/target/doc/leetcode/index.html
+        # --- for Windows WSL2 End ---
         python3 -m http.server 8080 --bind 127.0.0.1 --directory target/doc/
         ;;
     # cargo doc 生成 inde.html jump /leetcode dir
