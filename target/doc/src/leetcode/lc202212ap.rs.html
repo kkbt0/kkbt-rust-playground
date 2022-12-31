@@ -287,6 +287,55 @@
 <a href="#287" id="287">287</a>
 <a href="#288" id="288">288</a>
 <a href="#289" id="289">289</a>
+<a href="#290" id="290">290</a>
+<a href="#291" id="291">291</a>
+<a href="#292" id="292">292</a>
+<a href="#293" id="293">293</a>
+<a href="#294" id="294">294</a>
+<a href="#295" id="295">295</a>
+<a href="#296" id="296">296</a>
+<a href="#297" id="297">297</a>
+<a href="#298" id="298">298</a>
+<a href="#299" id="299">299</a>
+<a href="#300" id="300">300</a>
+<a href="#301" id="301">301</a>
+<a href="#302" id="302">302</a>
+<a href="#303" id="303">303</a>
+<a href="#304" id="304">304</a>
+<a href="#305" id="305">305</a>
+<a href="#306" id="306">306</a>
+<a href="#307" id="307">307</a>
+<a href="#308" id="308">308</a>
+<a href="#309" id="309">309</a>
+<a href="#310" id="310">310</a>
+<a href="#311" id="311">311</a>
+<a href="#312" id="312">312</a>
+<a href="#313" id="313">313</a>
+<a href="#314" id="314">314</a>
+<a href="#315" id="315">315</a>
+<a href="#316" id="316">316</a>
+<a href="#317" id="317">317</a>
+<a href="#318" id="318">318</a>
+<a href="#319" id="319">319</a>
+<a href="#320" id="320">320</a>
+<a href="#321" id="321">321</a>
+<a href="#322" id="322">322</a>
+<a href="#323" id="323">323</a>
+<a href="#324" id="324">324</a>
+<a href="#325" id="325">325</a>
+<a href="#326" id="326">326</a>
+<a href="#327" id="327">327</a>
+<a href="#328" id="328">328</a>
+<a href="#329" id="329">329</a>
+<a href="#330" id="330">330</a>
+<a href="#331" id="331">331</a>
+<a href="#332" id="332">332</a>
+<a href="#333" id="333">333</a>
+<a href="#334" id="334">334</a>
+<a href="#335" id="335">335</a>
+<a href="#336" id="336">336</a>
+<a href="#337" id="337">337</a>
+<a href="#338" id="338">338</a>
 </pre><pre class="rust"><code><span class="doccomment">//! 用于 leetcode 所有问题 非每日一题
 </span><span class="attr">#[allow(dead_code)]
 </span><span class="kw">pub struct </span>Solution;
@@ -575,6 +624,55 @@
     <span class="macro">assert_eq!</span>(Solution::search_insert(<span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">6</span>], <span class="number">2</span>), <span class="number">1</span>);
     <span class="macro">assert_eq!</span>(Solution::search_insert(<span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">6</span>], <span class="number">7</span>), <span class="number">4</span>);
     <span class="comment">// TODO
+</span>}
+<span class="kw">use </span>std::collections::HashSet;
+<span class="kw">use </span>std::cmp::max;
+<span class="doccomment">/// 2022-12-30  
+/// 3. 无重复字符的最长子串  
+/// &lt;https://leetcode.cn/problems/longest-substring-without-repeating-characters/?favorite=2cktkvj&gt;
+/// - [ ] **未解决**
+</span><span class="kw">impl </span>Solution {
+    <span class="doccomment">/// 滑动窗口
+    </span><span class="kw">pub fn </span>length_of_longest_substring(s: String) -&gt; i32 {
+        <span class="kw">let </span>s = s.as_bytes();
+        <span class="kw">if </span>s.len() == <span class="number">1 </span>{ <span class="kw">return </span><span class="number">1</span>;}
+        <span class="kw">let </span><span class="kw-2">mut </span>max_len = <span class="number">0</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>left = <span class="number">0</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>set = HashSet::new();
+        <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..s.len() {
+            <span class="kw">if </span>set.contains(<span class="kw-2">&amp;</span>s[i]) {
+                max_len = max(max_len, set.len());
+                <span class="kw">loop </span>{ <span class="comment">// pwwkew
+                    </span><span class="kw">if </span>set.contains(<span class="kw-2">&amp;</span>s[left]) {
+                        <span class="macro">println!</span>(<span class="string">&quot;{:?}&quot;</span>,set);
+                        left += <span class="number">1</span>;
+                        <span class="kw">break</span>;
+                    } <span class="kw">else </span>{
+                        <span class="kw">let </span>x = set.remove(<span class="kw-2">&amp;</span>s[left]);
+                        <span class="macro">println!</span>(<span class="string">&quot;{}&quot;</span>,x);
+                        left += <span class="number">1</span>;
+                    }
+                }
+            } <span class="kw">else </span>{
+                set.insert(s[i]); <span class="comment">// anvi aj
+            </span>}
+        }
+        max_len = max(max_len, set.len());
+        max_len <span class="kw">as </span>i32
+    }
+}
+<span class="attr">#[rustfmt::skip]
+#[test]
+</span><span class="kw">fn </span>test_length_of_longest_substring() {
+    <span class="comment">// assert_eq!(Solution::length_of_longest_substring(&quot;abcabcbb&quot;.to_string()),3); // 3
+    // assert_eq!(Solution::length_of_longest_substring(&quot;bbbbb&quot;.to_string()),1); // 1
+    // assert_eq!(Solution::length_of_longest_substring(&quot;pwwkew&quot;.to_string()),3); // 3
+    // assert_eq!(Solution::length_of_longest_substring(&quot; &quot;.to_string()),1); // 1
+    // assert_eq!(Solution::length_of_longest_substring(&quot;&quot;.to_string()),0); // 
+    // assert_eq!(Solution::length_of_longest_substring(&quot;au&quot;.to_string()),2); // 
+    // assert_eq!(Solution::length_of_longest_substring(&quot;anviaj&quot;.to_string()),5);
+    // assert_eq!(Solution::solve(),&quot;output&quot;);
+    // TODO
 </span>}
 </code></pre></div>
 </section></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="leetcode" data-themes="" data-resource-suffix="" data-rustdoc-version="1.68.0-nightly (8dfb33954 2022-12-25)" data-search-js="search-181581080540673f.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-58836c674e2f7bd2.css" ></div></body></html>

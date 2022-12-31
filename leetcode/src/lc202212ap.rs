@@ -287,3 +287,52 @@ fn test_search_insert() {
     assert_eq!(Solution::search_insert(vec![1, 3, 5, 6], 7), 4);
     // TODO
 }
+use std::collections::HashSet;
+use std::cmp::max;
+/// 2022-12-30  
+/// 3. 无重复字符的最长子串  
+/// <https://leetcode.cn/problems/longest-substring-without-repeating-characters/?favorite=2cktkvj>
+/// - [ ] **未解决**
+impl Solution {
+    /// 滑动窗口
+    pub fn length_of_longest_substring(s: String) -> i32 {
+        let s = s.as_bytes();
+        if s.len() == 1 { return 1;}
+        let mut max_len = 0;
+        let mut left = 0;
+        let mut set = HashSet::new();
+        for i in 0..s.len() {
+            if set.contains(&s[i]) {
+                max_len = max(max_len, set.len());
+                loop { // pwwkew
+                    if set.contains(&s[left]) {
+                        println!("{:?}",set);
+                        left += 1;
+                        break;
+                    } else {
+                        let x = set.remove(&s[left]);
+                        println!("{}",x);
+                        left += 1;
+                    }
+                }
+            } else {
+                set.insert(s[i]); // anvi aj
+            }
+        }
+        max_len = max(max_len, set.len());
+        max_len as i32
+    }
+}
+#[rustfmt::skip]
+#[test]
+fn test_length_of_longest_substring() {
+    // assert_eq!(Solution::length_of_longest_substring("abcabcbb".to_string()),3); // 3
+    // assert_eq!(Solution::length_of_longest_substring("bbbbb".to_string()),1); // 1
+    // assert_eq!(Solution::length_of_longest_substring("pwwkew".to_string()),3); // 3
+    // assert_eq!(Solution::length_of_longest_substring(" ".to_string()),1); // 1
+    // assert_eq!(Solution::length_of_longest_substring("".to_string()),0); // 
+    // assert_eq!(Solution::length_of_longest_substring("au".to_string()),2); // 
+    // assert_eq!(Solution::length_of_longest_substring("anviaj".to_string()),5);
+    // assert_eq!(Solution::solve(),"output");
+    // TODO
+}
