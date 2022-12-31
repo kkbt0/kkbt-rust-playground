@@ -252,3 +252,35 @@ fn test_exam_room() {
     println!("\x1b[91mNow Seat Status: {:?}\x1b[0m", room.set);
     // 0 _ _ _ 4 _ _ _ _ _ 9 ??? why not 6 is 2
 }
+/// 2022-12-31  
+/// 2037. 使每位学生都有座位的最少移动次数
+/// <https://leetcode.cn/problems/minimum-number-of-moves-to-seat-everyone/>
+impl Solution {
+    /// 排序后 abs 相加
+    pub fn min_moves_to_seat(mut seats: Vec<i32>, mut students: Vec<i32>) -> i32 {
+        seats.sort();
+        students.sort();
+        let mut ans = 0;
+        for i in 0..seats.len() {
+            ans += (seats[i] - students[i]).abs();
+        }
+        ans
+    }
+    /// Copy 使用了 iter zip fold 
+    pub fn min_moves_to_seat2(mut seats: Vec<i32>, mut students: Vec<i32>) -> i32 {
+        seats.sort();
+        students.sort();
+        seats
+            .iter()
+            .zip(students.iter())
+            .fold(0, |acc, (&x, &y)| acc + (x - y).abs())
+    }
+}
+#[test]
+fn test() {
+    // dbg!(Solution::min_moves_to_seat(vec![3,1,5],vec![2,7,4]));
+    assert_eq!(Solution::min_moves_to_seat(vec![3, 1, 5], vec![2, 7, 4]), 4);
+    assert_eq!(Solution::min_moves_to_seat2(vec![3, 1, 5], vec![2, 7, 4]), 4);
+    // assert_eq!(Solution::solve(),"output");
+    // TODO
+}
