@@ -14,7 +14,7 @@ case $1 in
         # --- for Windows WSL2 Begin ---
         explorer.exe file://wsl.localhost/Ubuntu/home/kkbt/PlayGround/target/doc/leetcode/index.html
         # --- for Windows WSL2 End ---
-        python3 -m http.server 8080 --bind 127.0.0.1 --directory target/doc/
+        # python3 -m http.server 8080 --bind 127.0.0.1 --directory target/doc/
         ;;
     # cargo doc 生成 inde.html jump /leetcode dir
     doc-gi)
