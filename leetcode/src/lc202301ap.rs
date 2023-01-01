@@ -290,7 +290,7 @@ impl Solution {
             ];
         digits.as_bytes().windows(2).fold(
             data[digits.as_bytes()[0] as usize - 50].clone(),
-            |vec, index| Self::permutations(&vec, &data[index[1] as usize - 50])
+            |vec, index| Self::permutations(&vec, &data[index[1] as usize - 50]),
         )
     }
     fn permutations(list1: &Vec<String>, list2: &Vec<String>) -> Vec<String> {
@@ -305,7 +305,7 @@ impl Solution {
 }
 #[test]
 fn test_letter_combinations() {
-    dbg!(Solution::letter_combinations("23".to_string())); 
+    dbg!(Solution::letter_combinations("23".to_string()));
     dbg!(Solution::letter_combinations("".to_string()));
     dbg!(Solution::letter_combinations("2".to_string()));
 }
