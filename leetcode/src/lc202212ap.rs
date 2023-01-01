@@ -289,7 +289,6 @@ fn test_search_insert() {
 }
 use std::cmp::max;
 use std::collections::HashSet;
-use std::vec;
 /// 2022-12-30  
 /// 3. 无重复字符的最长子串  
 /// <https://leetcode.cn/problems/longest-substring-without-repeating-characters/?favorite=2cktkvj>
@@ -366,4 +365,30 @@ fn test() {
         Solution::find_median_sorted_arrays(vec![1, 2], vec![3, 4]),
         2.5
     );
+}
+
+/// 2023-01-01  
+/// 2351. 第一个出现两次的字母  
+/// <https://leetcode.cn/problems/first-letter-to-appear-twice/>
+impl Solution {
+    /// HashSet 去重 or dp
+    pub fn repeated_character(s: String) -> char {
+        let s: Vec<char> = s.chars().collect();
+        let mut set = HashSet::new();
+        for i in s.iter() {
+            if set.contains(&i) {
+                return *i;
+            } else {
+                set.insert(i);
+            }
+        }
+        '0'
+    }
+}
+#[test]
+fn test_repeated_character() {
+    assert_eq!(Solution::repeated_character("abccbaacz".to_string()), 'c');
+    assert_eq!(Solution::repeated_character("abcdd".to_string()), 'd');
+    // assert_eq!(Solution::solve(),"output");
+    // TODO
 }
