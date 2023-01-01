@@ -82,10 +82,11 @@ impl Solution {
         for i in 0..nums.len() {
             for j in i + 1..nums.len() {
                 for k in j + 1..nums.len() {
-                    if nums[i] > 0 && nums[j] > 0 && nums[k] > 0 { continue; }
-                    else if nums[i] < 0 && nums[j] < 0 && nums[k] < 0 { continue; }
-                    else if nums[i] + nums[j] + nums[k] == 0
-                    {
+                    if nums[i] > 0 && nums[j] > 0 && nums[k] > 0 {
+                        continue;
+                    } else if nums[i] < 0 && nums[j] < 0 && nums[k] < 0 {
+                        continue;
+                    } else if nums[i] + nums[j] + nums[k] == 0 {
                         let mut tem = vec![nums[i], nums[j], nums[k]];
                         tem.sort();
                         ans.insert(tem);
@@ -101,4 +102,29 @@ fn test() {
     dbg!(Solution::three_sum(vec![-1, 0, 1, 2, -1, -4]));
     // assert_eq!(Solution::solve(),"output");
     // TODO
+}
+/// 2023-01-01  
+/// 11. 盛最多水的容器  
+/// <https://leetcode.cn/problems/container-with-most-water/>
+impl Solution {
+    /// 左右指针 遇到短板收窄一格
+    pub fn max_area(height: Vec<i32>) -> i32 {
+        let (mut left, mut right) = (0, height.len() - 1);
+        let mut ans = 0;
+        while left < right {
+            if height[left] < height[right] {
+                ans = ans.max((right - left) * height[left] as usize);
+                left += 1;
+            } else {
+                ans = ans.max((right - left) * height[right] as usize);
+                right -= 1;
+            }
+        }
+        ans as i32
+    }
+}
+#[test]
+fn test_max_area() {
+    assert_eq!(Solution::max_area(vec![1, 8, 6, 2, 5, 4, 8, 3, 7]), 49);
+    assert_eq!(Solution::max_area(vec![1, 1]), 1);
 }
