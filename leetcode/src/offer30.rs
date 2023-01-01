@@ -28,7 +28,7 @@ impl MinStack {
 /// <https://leetcode.cn/problems/yong-liang-ge-zhan-shi-xian-dui-lie-lcof/>
 #[allow(dead_code)]
 struct CQueue {
-    vec: Vec<i32>
+    vec: Vec<i32>,
 }
 #[allow(dead_code)]
 impl CQueue {
@@ -39,7 +39,9 @@ impl CQueue {
         self.vec.push(value)
     }
     fn delete_head(&mut self) -> i32 {
-        if self.vec.is_empty() { return -1; }
+        if self.vec.is_empty() {
+            return -1;
+        }
         self.vec.remove(0)
     }
 }
