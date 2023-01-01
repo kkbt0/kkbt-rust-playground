@@ -371,7 +371,7 @@ fn test() {
 /// 6. Z 字形变换  
 /// <https://leetcode.cn/problems/zigzag-conversion/>
 impl Solution {
-    /// Code_Description
+    /// 模拟
     pub fn convert(s: String, num_rows: i32) -> String {
         let mut vec = vec![Vec::new(); num_rows as usize]; // 每行一个 Vec
         let mut now_len_index = 0; // 0 1 2; 1  len=2*num_rows-1
