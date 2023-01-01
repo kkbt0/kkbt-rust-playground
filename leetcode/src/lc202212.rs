@@ -266,7 +266,7 @@ impl Solution {
         }
         ans
     }
-    /// Copy 使用了 iter zip fold 
+    /// Copy 使用了 iter zip fold
     pub fn min_moves_to_seat2(mut seats: Vec<i32>, mut students: Vec<i32>) -> i32 {
         seats.sort();
         students.sort();
@@ -280,7 +280,10 @@ impl Solution {
 fn test() {
     // dbg!(Solution::min_moves_to_seat(vec![3,1,5],vec![2,7,4]));
     assert_eq!(Solution::min_moves_to_seat(vec![3, 1, 5], vec![2, 7, 4]), 4);
-    assert_eq!(Solution::min_moves_to_seat2(vec![3, 1, 5], vec![2, 7, 4]), 4);
+    assert_eq!(
+        Solution::min_moves_to_seat2(vec![3, 1, 5], vec![2, 7, 4]),
+        4
+    );
     // assert_eq!(Solution::solve(),"output");
     // TODO
 }
