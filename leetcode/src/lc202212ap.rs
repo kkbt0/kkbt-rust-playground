@@ -291,7 +291,7 @@ use std::collections::HashSet;
 /// 2022-12-30  
 /// 3. 无重复字符的最长子串  
 /// <https://leetcode.cn/problems/longest-substring-without-repeating-characters/?favorite=2cktkvj>
-/// - [ ] **未解决**
+/// #待解决
 impl Solution {
     /// 滑动窗口
     pub fn length_of_longest_substring(s: String) -> i32 {
