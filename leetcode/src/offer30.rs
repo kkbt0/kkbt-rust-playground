@@ -23,3 +23,23 @@ impl MinStack {
         *self.val.iter().min().unwrap()
     }
 }
+/// 2023-01-01  
+/// 剑指 Offer 09. 用两个栈实现队列  
+/// <https://leetcode.cn/problems/yong-liang-ge-zhan-shi-xian-dui-lie-lcof/>
+#[allow(dead_code)]
+struct CQueue {
+    vec: Vec<i32>
+}
+#[allow(dead_code)]
+impl CQueue {
+    fn new() -> Self {
+        Self { vec: Vec::new() }
+    }
+    fn append_tail(&mut self, value: i32) {
+        self.vec.push(value)
+    }
+    fn delete_head(&mut self) -> i32 {
+        if self.vec.is_empty() { return -1; }
+        self.vec.remove(0)
+    }
+}
