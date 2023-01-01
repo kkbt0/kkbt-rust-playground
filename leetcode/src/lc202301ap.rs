@@ -1,4 +1,6 @@
 //! 用于 leetcode 所有问题 非每日一题
+
+use std::vec;
 pub struct Solution;
 /// 2023-01-01  
 /// 4. 寻找两个正序数组的中位数  
@@ -67,4 +69,36 @@ fn test_convert() {
         "PINALSIGYAHRPI".to_string()
     );
     assert_eq!(Solution::convert("A".to_string(), 1), "A".to_string());
+}
+use std::collections::HashSet;
+/// 2023-01-01  
+/// 15. 三数之和  
+/// <https://leetcode.cn/problems/3sum/>
+/// 超时
+impl Solution {
+    /// Code_Description
+    pub fn three_sum(nums: Vec<i32>) -> Vec<Vec<i32>> {
+        let mut ans = HashSet::new();
+        for i in 0..nums.len() {
+            for j in i + 1..nums.len() {
+                for k in j + 1..nums.len() {
+                    if nums[i] > 0 && nums[j] > 0 && nums[k] > 0 { continue; }
+                    else if nums[i] < 0 && nums[j] < 0 && nums[k] < 0 { continue; }
+                    else if nums[i] + nums[j] + nums[k] == 0
+                    {
+                        let mut tem = vec![nums[i], nums[j], nums[k]];
+                        tem.sort();
+                        ans.insert(tem);
+                    }
+                }
+            }
+        }
+        ans.into_iter().collect()
+    }
+}
+#[test]
+fn test() {
+    dbg!(Solution::three_sum(vec![-1, 0, 1, 2, -1, -4]));
+    // assert_eq!(Solution::solve(),"output");
+    // TODO
 }
