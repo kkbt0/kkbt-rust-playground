@@ -1,4 +1,4 @@
-//! 这个 Crate 用于存储我个人的 leetcode 代码  
+//! 这个 Crate 用于存储我个人的 leetcode 代码和一些值得参考学习的题解  
 //! Gitee Repository <https://gitee.com/kkbt/rust-play-ground>  
 //! by [恐咖兵糖](https://www.ftls.xyz)
 
@@ -6,7 +6,7 @@ pub mod lc202212; // 2022-12
 pub mod lc202212ap; // 2022-12
 pub mod lc202301; // 2023-01
 pub mod lc202301ap; // 2023-01
-pub mod offer30; // 2023-01
+pub mod offer; // 2023-01
 
 #[allow(dead_code)]
 mod qa {

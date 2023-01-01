@@ -1,8 +1,10 @@
+//! 2023-01  剑指 Offer  
+
 /// 2023-01-01  
 /// 剑指 Offer 30. 包含min函数的栈  
 /// <https://leetcode.cn/problems/bao-han-minhan-shu-de-zhan-lcof/>
 #[allow(dead_code)]
-struct MinStack {
+pub struct MinStack {
     val: Vec<i32>,
 }
 #[allow(dead_code)]
@@ -27,7 +29,7 @@ impl MinStack {
 /// 剑指 Offer 09. 用两个栈实现队列  
 /// <https://leetcode.cn/problems/yong-liang-ge-zhan-shi-xian-dui-lie-lcof/>
 #[allow(dead_code)]
-struct CQueue {
+pub struct CQueue {
     vec: Vec<i32>,
 }
 #[allow(dead_code)]
