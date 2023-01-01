@@ -367,3 +367,43 @@ fn test() {
     );
 }
 
+/// 2023-01-01  
+/// 6. Z 字形变换  
+/// <https://leetcode.cn/problems/zigzag-conversion/>
+impl Solution {
+    /// Code_Description
+    pub fn convert(s: String, num_rows: i32) -> String {
+        let mut vec = vec![Vec::new(); num_rows as usize]; // 每行一个 Vec
+        let mut now_len_index = 0; // 0 1 2; 1  len=2*num_rows-1
+        let mut now_len = Vec::new();
+        for i in 0..num_rows {
+            now_len.push(i);
+        }
+        for i in (1..num_rows - 1).rev() {
+            now_len.push(i);
+        }
+        let len = now_len.len(); // (2 * num_rows - 1)
+        let s = s.as_bytes();
+        for iter in s {
+            vec[now_len[now_len_index % len] as usize].push(*iter);
+            now_len_index += 1;
+        }
+        let mut union = "".to_string();
+        for iter in vec {
+            union = union + &String::from_utf8(iter).unwrap();
+        }
+        union
+    }
+}
+#[test]
+fn test_convert() {
+    assert_eq!(
+        Solution::convert("PAYPALISHIRING".to_string(), 3),
+        "PAHNAPLSIIGYIR".to_string()
+    );
+    assert_eq!(
+        Solution::convert("PAYPALISHIRING".to_string(), 4),
+        "PINALSIGYAHRPI".to_string()
+    );
+    assert_eq!(Solution::convert("A".to_string(), 1), "A".to_string());
+}
