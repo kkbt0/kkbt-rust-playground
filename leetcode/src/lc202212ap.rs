@@ -289,6 +289,7 @@ fn test_search_insert() {
 }
 use std::cmp::max;
 use std::collections::HashSet;
+use std::vec;
 /// 2022-12-30  
 /// 3. 无重复字符的最长子串  
 /// <https://leetcode.cn/problems/longest-substring-without-repeating-characters/?favorite=2cktkvj>
@@ -338,4 +339,31 @@ fn test_length_of_longest_substring() {
     // assert_eq!(Solution::length_of_longest_substring("anviaj".to_string()),5);
     // assert_eq!(Solution::solve(),"output");
     // TODO
+}
+/// 2023-01-01  
+/// 4. 寻找两个正序数组的中位数  
+/// <https://leetcode.cn/problems/median-of-two-sorted-arrays/>
+impl Solution {
+    /// 库 chain sort 浪费了两个正序
+    pub fn find_median_sorted_arrays(nums1: Vec<i32>, nums2: Vec<i32>) -> f64 {
+        let mut union = nums1.iter().chain(&nums2).collect::<Vec<_>>();
+        union.sort();
+        let len = union.len();
+        if len % 2 == 0 {
+            return (union[len / 2 - 1] + union[len / 2]) as f64 / 2.0;
+        } else {
+            return *union[len / 2] as f64;
+        }
+    }
+}
+#[test]
+fn test() {
+    assert_eq!(
+        Solution::find_median_sorted_arrays(vec![1, 3], vec![2]),
+        2.0
+    );
+    assert_eq!(
+        Solution::find_median_sorted_arrays(vec![1, 2], vec![3, 4]),
+        2.5
+    );
 }
