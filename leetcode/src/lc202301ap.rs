@@ -266,3 +266,46 @@ fn test_int_to_roman() {
     assert_eq!(Solution::int_to_roman2(1994), "MCMXCIV");
     // TODO
 }
+/// 2023-01-01  
+/// 17. 电话号码的字母组合  
+/// <https://leetcode.cn/problems/letter-combinations-of-a-phone-number/>
+impl Solution {
+    /// 全排列  
+    /// 已发布题解 <https://leetcode.cn/problems/letter-combinations-of-a-phone-number/solution/by-kkbt-fu3f/>
+    pub fn letter_combinations(digits: String) -> Vec<String> {
+        if digits.is_empty() {
+            return vec![];
+        }
+        // let ans = Vec::new();
+        #[rustfmt::skip]
+        let data = [
+            vec![String::from("a"),String::from("b"),String::from("c")], // 2
+            vec![String::from("d"),String::from("e"),String::from("f")],
+            vec![String::from("g"),String::from("h"),String::from("i")],
+            vec![String::from("j"),String::from("k"),String::from("l")],
+            vec![String::from("m"),String::from("n"),String::from("o")],
+            vec![String::from("p"),String::from("q"),String::from("r"),String::from("s")], // 7
+            vec![String::from("t"),String::from("u"),String::from("v")],
+            vec![String::from("w"),String::from("x"),String::from("y"),String::from("z")], // 9
+            ];
+        digits.as_bytes().windows(2).fold(
+            data[digits.as_bytes()[0] as usize - 50].clone(),
+            |vec, index| Self::permutations(&vec, &data[index[1] as usize - 50])
+        )
+    }
+    fn permutations(list1: &Vec<String>, list2: &Vec<String>) -> Vec<String> {
+        let mut ans = Vec::new();
+        for i in list1.iter() {
+            for j in list2.iter() {
+                ans.push(format!("{}{}", i, j));
+            }
+        }
+        ans
+    }
+}
+#[test]
+fn test_letter_combinations() {
+    dbg!(Solution::letter_combinations("23".to_string())); 
+    dbg!(Solution::letter_combinations("".to_string()));
+    dbg!(Solution::letter_combinations("2".to_string()));
+}
