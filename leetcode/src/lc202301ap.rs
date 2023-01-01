@@ -251,7 +251,7 @@ impl Solution {
         .into_iter()
         .fold(
             (String::with_capacity(20), num),
-            |(mut s, mut num), (base, unit)| (s + &unit.repeat((num / base) as usize), num % base),
+            |(s, num), (base, unit)| (s + &unit.repeat((num / base) as usize), num % base),
         )
         .0
     }
@@ -263,5 +263,6 @@ fn test_int_to_roman() {
     assert_eq!(Solution::int_to_roman(9), "IX");
     assert_eq!(Solution::int_to_roman(58), "LVIII");
     assert_eq!(Solution::int_to_roman(1994), "MCMXCIV");
+    assert_eq!(Solution::int_to_roman2(1994), "MCMXCIV");
     // TODO
 }
