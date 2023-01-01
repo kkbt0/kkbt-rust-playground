@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"struct":[["ListNode","Definition for singly-linked list."],["Solution",""]]};

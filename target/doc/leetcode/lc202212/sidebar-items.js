@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"struct":[["ExamRoom","2022-12-30 855. 考场就座 https://leetcode.cn/problems/exam-room/ 令人迷惑的一道题 Copy"],["Solution","通用 Solution"]]};

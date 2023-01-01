@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":[["lc202212","用于每日一题"],["lc202212ap","用于 leetcode 所有问题 非每日一题"]]};
+window.SIDEBAR_ITEMS = {"mod":[["lc202301","用于每日一题"],["lc202301ap","用于 leetcode 所有问题 非每日一题"]]};
