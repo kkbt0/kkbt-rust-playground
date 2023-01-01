@@ -128,3 +128,140 @@ fn test_max_area() {
     assert_eq!(Solution::max_area(vec![1, 8, 6, 2, 5, 4, 8, 3, 7]), 49);
     assert_eq!(Solution::max_area(vec![1, 1]), 1);
 }
+
+/// 2023-01-01  
+/// 12. 整数转罗马数字  
+/// <https://leetcode.cn/problems/integer-to-roman/>
+impl Solution {
+    /// 1 4 5 9  
+    /// 10 40 50 90  
+    /// 100 400 500 900  
+    /// 1000  
+    /// 1 <= num <= 3999  
+    /// 判题机 不支持 `String::from_iter()` 不能传入 `Vec<char>` :>  
+    /// 不过此题换成 `&str` 就能使用 for 循环了
+    pub fn int_to_roman(num: i32) -> String {
+        let mut vec = Vec::new();
+        let mut num = num;
+
+        let num_1000 = num / 1000;
+        for _ in 0..num_1000 {
+            vec.push(b'M');
+        }
+        num -= num_1000 * 1000;
+
+        let num_900 = num / 900;
+        for _ in 0..num_900 {
+            vec.push(b'C');
+            vec.push(b'M');
+        }
+        num -= num_900 * 900;
+
+        let num_500 = num / 500;
+        for _ in 0..num_500 {
+            vec.push(b'D');
+        }
+        num -= num_500 * 500;
+
+        let num_400 = num / 400;
+        for _ in 0..num_400 {
+            vec.push(b'C');
+            vec.push(b'D');
+        }
+        num -= num_400 * 400;
+
+        let num_100 = num / 100;
+        for _ in 0..num_100 {
+            vec.push(b'C');
+        }
+        num -= num_100 * 100;
+
+        let num_90 = num / 90;
+        for _ in 0..num_90 {
+            vec.push(b'X');
+            vec.push(b'C');
+        }
+        num -= num_90 * 90;
+
+        let num_50 = num / 50;
+        for _ in 0..num_50 {
+            vec.push(b'L');
+        }
+        num -= num_50 * 50;
+
+        let num_40 = num / 40;
+        for _ in 0..num_40 {
+            vec.push(b'X');
+            vec.push(b'L');
+        }
+        num -= num_40 * 40;
+
+        let num_10 = num / 10;
+        for _ in 0..num_10 {
+            vec.push(b'X');
+        }
+        num -= num_10 * 10;
+
+        let num_9 = num / 9;
+        for _ in 0..num_9 {
+            vec.push(b'I');
+            vec.push(b'X');
+        }
+        num -= num_9 * 9;
+
+        let num_5 = num / 5;
+        for _ in 0..num_5 {
+            vec.push(b'V');
+        }
+        num -= num_5 * 5;
+
+        let num_4 = num / 4;
+        for _ in 0..num_4 {
+            vec.push(b'I');
+            vec.push(b'V');
+        }
+        num -= num_4 * 4;
+
+        let num_1 = num / 1;
+        for _ in 0..num_1 {
+            vec.push(b'I');
+        }
+        // num -= num_1 * 1;
+        String::from_utf8(vec).unwrap()
+    }
+    /// 作者：sealoong
+    /// 链接：<https://leetcode.cn/problems/integer-to-roman/solution/rustan-shi-jin-zhi-tan-xin-chu-li-by-sea-qp2r/>
+    /// 来源：力扣（LeetCode）
+    pub fn int_to_roman2(num: i32) -> String {
+        [
+            (1000, "M"),
+            (900, "CM"),
+            (500, "D"),
+            (400, "CD"),
+            (100, "C"),
+            (90, "XC"),
+            (50, "L"),
+            (40, "XL"),
+            (10, "X"),
+            (9, "IX"),
+            (5, "V"),
+            (4, "IV"),
+            (1, "I"),
+        ]
+        .into_iter()
+        .fold(
+            (String::with_capacity(20), num),
+            |(mut s, mut num), (base, unit)| (s + &unit.repeat((num / base) as usize), num % base),
+        )
+        .0
+    }
+}
+#[test]
+fn test_int_to_roman() {
+    assert_eq!(Solution::int_to_roman(3), "III");
+    assert_eq!(Solution::int_to_roman(4), "IV");
+    assert_eq!(Solution::int_to_roman(9), "IX");
+    assert_eq!(Solution::int_to_roman(58), "LVIII");
+    assert_eq!(Solution::int_to_roman(1994), "MCMXCIV");
+    // TODO
+}
