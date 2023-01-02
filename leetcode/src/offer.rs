@@ -102,3 +102,34 @@ impl Solution {
         prev
     }
 }
+/// 2023-01-02  
+/// 剑指 Offer 35. 复杂链表的复制  
+/// <https://leetcode.cn/problems/fu-za-lian-biao-de-fu-zhi-lcof/>
+impl Solution {
+    /// 无 Rust 版本
+    pub fn copy_random_list() {
+        // TODO
+        // class Solution {
+        //     public:
+        //         unordered_map<Node*, Node*> cachedNode;
+        //         Node* copyRandomList(Node* head) {
+        //             if (head == nullptr) {
+        //                 return nullptr;
+        //             }
+        //             if (!cachedNode.count(head)) {
+        //                 Node* headNew = new Node(head->val);
+        //                 cachedNode[head] = headNew;
+        //                 headNew->next = copyRandomList(head->next);
+        //                 headNew->random = copyRandomList(head->random);
+        //             }
+        //             return cachedNode[head];
+        //         }
+        //     };
+    }
+}
+#[test]
+fn test_copy_random_list() {
+    dbg!(Solution::copy_random_list());
+    // assert_eq!(Solution::solve(),"output");
+    // TODO
+}
