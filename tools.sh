@@ -22,9 +22,9 @@ case $1 in
         ;;
     # test daily problem / all problems
     test-dp)
-        cargo test --package leetcode --lib -- lc202212::$2 --exact --nocapture
+        cargo test --package leetcode --lib -- lc202301::$2 --exact --nocapture
         ;;
     test-ap)
-        cargo test --package leetcode --lib -- lc202212ap::$2 --exact --nocapture
+        cargo test --package leetcode --lib -- lc202301ap::$2 --exact --nocapture | grep run
         ;;
 esac
