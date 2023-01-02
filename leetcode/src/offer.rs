@@ -87,3 +87,18 @@ impl Solution {
         answer
     }
 }
+/// 2023-01-02  
+/// Offer 24. 反转链表  
+/// <https://leetcode.cn/problems/fan-zhuan-lian-biao-lcof/>
+impl Solution {
+    pub fn reverse_list(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
+        let mut head = head;
+        let mut prev = None;
+        while let Some(mut node) = head {
+            head = node.next.take();
+            node.next = prev;
+            prev = Some(node);
+        }
+        prev
+    }
+}
