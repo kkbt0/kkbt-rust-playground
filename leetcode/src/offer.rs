@@ -3,6 +3,7 @@
 /// 2023-01-01  
 /// 剑指 Offer 30. 包含min函数的栈  
 /// <https://leetcode.cn/problems/bao-han-minhan-shu-de-zhan-lcof/>
+pub struct Solution;
 #[allow(dead_code)]
 pub struct MinStack {
     val: Vec<i32>,
@@ -45,5 +46,44 @@ impl CQueue {
             return -1;
         }
         self.vec.remove(0)
+    }
+}
+#[derive(PartialEq, Eq, Clone, Debug)]
+pub struct ListNode {
+  pub val: i32,
+  pub next: Option<Box<ListNode>>
+}
+
+impl ListNode {
+  #[inline]
+  fn new(val: i32) -> Self {
+    ListNode {
+      next: None,
+      val
+    }
+  }
+}
+/// 2023-01-02  
+/// 剑指 Offer 06. 从尾到头打印链表  
+/// <https://leetcode.cn/problems/cong-wei-dao-tou-da-yin-lian-biao-lcof/>
+impl Solution {
+    pub fn reverse_print(mut head: Option<Box<ListNode>>) -> Vec<i32> {
+        let mut ans = Vec::new();
+        while let Some(node) = head {
+            ans.push(node.val);
+            head = node.next;
+        }
+        ans.reverse();
+        ans
+    }
+    pub fn reverse_print2(head: Option<Box<ListNode>>) -> Vec<i32> {
+        let mut head = head;
+        let mut answer = Vec::new();
+        while let Some(mut node) = head {
+            head = node.next.take();
+            answer.push(node.val);
+        }
+        answer.reverse();
+        answer
     }
 }
