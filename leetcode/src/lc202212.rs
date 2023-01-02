@@ -286,4 +286,3 @@ fn test() {
     // assert_eq!(Solution::solve(),"output");
     // TODO
 }
-
