@@ -313,58 +313,54 @@ fn test_letter_combinations() {
 /// 1801. 积压订单中的订单总数  
 /// <https://leetcode.cn/problems/number-of-orders-in-the-backlog/>
 impl Solution {
-    /// Code_Description
+    /// 优先队列模拟 Rust 版本  
+    /// 已发题解 <https://leetcode.cn/problems/number-of-orders-in-the-backlog/solution/rust-guan-fang-jie-fa-by-kkbt-c3kn/>
     pub fn get_number_of_backlog_orders(orders: Vec<Vec<i32>>) -> i32 {
         const MOD: i32 = 1000000007;
-        let mut buy_orders: Vec<Vec<i32>> = Vec::new(); //
-        let mut sell_orders: Vec<Vec<i32>> = Vec::new(); // Reverse
+        use std::collections::BinaryHeap; // price  amount
+        let mut buy_orders = BinaryHeap::<(i32, i32)>::new(); //
+        let mut sell_orders = BinaryHeap::<(i32, i32)>::new(); // Reverse
 
         for order in orders {
             let (price, mut amount, order_type) = (order[0], order[1], order[2]);
             if order_type == 0 {
                 while amount > 0
                     && !sell_orders.is_empty()
-                    && sell_orders.last().unwrap()[0] <= price
+                    && -sell_orders.peek().unwrap().0 <= price
                 {
                     let mut sell_order = sell_orders.pop().unwrap();
-                    let sell_amount = sell_order[1].min(amount);
+                    let sell_amount = sell_order.1.min(amount);
                     amount -= sell_amount;
-                    sell_order[1] -= sell_amount;
-                    if sell_order[1] > 0 {
+                    sell_order.1 -= sell_amount;
+                    if sell_order.1 > 0 {
                         sell_orders.push(sell_order);
-                        sell_orders.sort_by(|a, b| b[0].cmp(&a[0]));
                     }
                 }
                 if amount > 0 {
-                    buy_orders.push(vec![price, amount]);
-                    buy_orders.sort_by(|a, b| a[0].cmp(&b[0]));
+                    buy_orders.push((price, amount));
                 }
             } else {
-                while amount > 0 && !buy_orders.is_empty() && buy_orders.last().unwrap()[0] >= price
+                while amount > 0 && !buy_orders.is_empty() && buy_orders.peek().unwrap().0 >= price
                 {
                     let mut buy_order = buy_orders.pop().unwrap();
-                    let buy_amount = buy_order[1].min(amount);
+                    let buy_amount = buy_order.1.min(amount);
                     amount -= buy_amount;
-                    buy_order[1] -= buy_amount;
-                    if buy_order[1] > 0 {
+                    buy_order.1 -= buy_amount;
+                    if buy_order.1 > 0 {
                         buy_orders.push(buy_order);
-                        buy_orders.sort_by(|a, b| a[0].cmp(&b[0]));
                     }
                 }
                 if amount > 0 {
-                    sell_orders.push(vec![price, amount]);
-                    sell_orders.sort_by(|a, b| b[0].cmp(&a[0]));
+                    sell_orders.push((-price, amount)); // for Rust BinaryHeap 只有大顶堆
                 }
             }
         }
         let mut total = 0;
         for iter in sell_orders.iter() {
-            total += iter[1];
-            total %= MOD;
+            total = (iter.1 + total) % MOD;
         }
         for iter in buy_orders.iter() {
-            total += iter[1];
-            total %= MOD;
+            total = (iter.1 + total) % MOD;
         }
         return total;
     }
