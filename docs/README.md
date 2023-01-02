@@ -21,3 +21,11 @@ fn main() {
 // index: 1, char: b
 // index: 2, char: a
 ```
+
+大顶堆/ 优先队列
+
+```rust
+use std::collections::BinaryHeap;
+let mut demo = BinaryHeap::<(i32, i32)>::new(); // 用小顶堆 直接 push((-1,2)); 之后用数据再 *(-1) 即可
+demo.push((1, 2));
+```
