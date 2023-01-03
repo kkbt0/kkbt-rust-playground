@@ -29,7 +29,6 @@ fn test_repeated_character() {
     // TODO
 }
 
-
 /// 2023-01-02  
 /// 1801. 积压订单中的订单总数  
 /// <https://leetcode.cn/problems/number-of-orders-in-the-backlog/>
@@ -132,6 +131,44 @@ fn test_get_number_of_backlog_orders() {
             vec![5, 7, 0]
         ]),
         69
+    );
+    // assert_eq!(Solution::solve(),"output");
+    // TODO
+}
+
+/// 2023-01-03  
+/// 2042. 检查句子中的数字是否递增  
+/// <https://leetcode.cn/problems/check-if-numbers-are-ascending-in-a-sentence/>
+impl Solution {
+    /// split_whitespace filter_map windows all s.parse::<u8>().ok()
+    pub fn are_numbers_ascending(s: String) -> bool {
+        s.split_whitespace()
+            .filter_map(|s| s.parse::<u8>().ok())
+            .collect::<Vec<u8>>()
+            .windows(2)
+            .all(|x| x[0] < x[1])
+    }
+}
+#[rustfmt::skip]
+#[test]
+fn test_solve() {
+    assert_eq!(
+        Solution::are_numbers_ascending("1 box has 3 blue 4 red 6 green and 12 yellow marbles".to_string()),
+        true
+    );
+    assert_eq!(
+        Solution::are_numbers_ascending("hello world 5 x 5".to_string()),
+        false
+    );
+    assert_eq!(
+        Solution::are_numbers_ascending(
+            "sunset is at 7 51 pm overnight lows will be in the low 50 and 60 s".to_string()
+        ),
+        false
+    );
+    assert_eq!(
+        Solution::are_numbers_ascending("4 5 11 26".to_string()),
+        true
     );
     // assert_eq!(Solution::solve(),"output");
     // TODO
