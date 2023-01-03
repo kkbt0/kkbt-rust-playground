@@ -1,4 +1,4 @@
-use leetcode::lc202301ap::Solution;
+use leetcode::lc202301::Solution;
 
 #[test]
 fn test_get_number_of_backlog_orders() {
