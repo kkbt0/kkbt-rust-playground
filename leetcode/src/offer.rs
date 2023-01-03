@@ -141,8 +141,37 @@ impl Solution {
     }
 }
 #[test]
+fn test_replace_space() {
+    assert_eq!(
+        Solution::replace_space("We are happy.".to_string()),
+        "We%20are%20happy.".to_string()
+    );
+}
+
+/// 2023-01-03  
+/// 剑指 Offer 58 - II. 左旋转字符串  
+/// <https://leetcode.cn/problems/zuo-xuan-zhuan-zi-fu-chuan-lcof/>
+impl Solution {
+    /// Code_Description
+    pub fn reverse_left_words(s: String, n: i32) -> String {
+        let mut s = Vec::from(s);
+        for _ in 0..n {
+            let char = s.remove(0);
+            s.push(char);
+        }
+        String::from_utf8(s).unwrap()
+    }
+    // 字符串切片
+    pub fn reverse_left_words2(s: String, n: i32) -> String {
+        [&s[n as usize..], &s[..n as usize]].concat()
+    }
+}
+#[test]
 fn test_solve() {
-    assert_eq!(Solution::replace_space("We are happy.".to_string()),"We%20are%20happy.".to_string());
-    // assert_eq!(Solution::solve(),"output");
+    // dbg!(Solution::reverse_left_words());
+    assert_eq!(
+        Solution::reverse_left_words("abcdefg".to_string(), 2),
+        "cdefgab".to_string()
+    );
     // TODO
 }
