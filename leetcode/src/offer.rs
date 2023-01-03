@@ -130,3 +130,19 @@ fn test_copy_random_list() {
     // assert_eq!(Solution::solve(),"output");
     // TODO
 }
+
+/// 2023-01-03  
+/// 剑指 Offer 05. 替换空格  
+/// <https://leetcode.cn/problems/ti-huan-kong-ge-lcof/>
+impl Solution {
+    /// Code_Description
+    pub fn replace_space(s: String) -> String {
+        s.replace(" ", "%20")
+    }
+}
+#[test]
+fn test_solve() {
+    assert_eq!(Solution::replace_space("We are happy.".to_string()),"We%20are%20happy.".to_string());
+    // assert_eq!(Solution::solve(),"output");
+    // TODO
+}
