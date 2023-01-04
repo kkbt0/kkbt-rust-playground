@@ -175,3 +175,24 @@ fn test_solve() {
     );
     // TODO
 }
+/// 2023-01-04  
+/// 剑指 Offer 03. 数组中重复的数字  
+/// <https://leetcode.cn/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/>
+impl Solution {
+    /// Code_Description
+    pub fn find_repeat_number(mut nums: Vec<i32>) -> i32 {
+        nums.sort();
+        for i in 0..nums.len()-1 {
+            if nums[i] == nums[i+1] {
+                return nums[i];
+            }
+        }
+        0
+    }
+}
+#[test]
+fn test_find_repeat_number() {
+    dbg!(Solution::find_repeat_number(vec![2, 3, 1, 0, 2, 5, 3]));
+    // assert_eq!(Solution::solve(),"output");
+    // TODO
+}
