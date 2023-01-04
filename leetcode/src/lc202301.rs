@@ -140,7 +140,7 @@ fn test_get_number_of_backlog_orders() {
 /// 2042. 检查句子中的数字是否递增  
 /// <https://leetcode.cn/problems/check-if-numbers-are-ascending-in-a-sentence/>
 impl Solution {
-    /// split_whitespace filter_map windows all s.parse::<u8>().ok()
+    /// split_whitespace filter_map windows all `s.parse::<u8>().ok()`
     pub fn are_numbers_ascending(s: String) -> bool {
         s.split_whitespace()
             .filter_map(|s| s.parse::<u8>().ok())

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":[["CQueue","2023-01-01 剑指 Offer 09. 用两个栈实现队列 https://leetcode.cn/problems/yong-liang-ge-zhan-shi-xian-dui-lie-lcof/"],["MinStack","2023-01-01 剑指 Offer 30. 包含min函数的栈 https://leetcode.cn/problems/bao-han-minhan-shu-de-zhan-lcof/"]]};
+window.SIDEBAR_ITEMS = {"struct":[["CQueue","2023-01-01 剑指 Offer 09. 用两个栈实现队列 https://leetcode.cn/problems/yong-liang-ge-zhan-shi-xian-dui-lie-lcof/"],["ListNode",""],["MinStack",""],["Solution","2023-01-01 剑指 Offer 30. 包含min函数的栈 https://leetcode.cn/problems/bao-han-minhan-shu-de-zhan-lcof/"]]};
