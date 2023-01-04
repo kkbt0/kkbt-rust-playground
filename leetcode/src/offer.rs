@@ -182,8 +182,8 @@ impl Solution {
     /// Code_Description
     pub fn find_repeat_number(mut nums: Vec<i32>) -> i32 {
         nums.sort();
-        for i in 0..nums.len()-1 {
-            if nums[i] == nums[i+1] {
+        for i in 0..nums.len() - 1 {
+            if nums[i] == nums[i + 1] {
                 return nums[i];
             }
         }
@@ -193,6 +193,49 @@ impl Solution {
 #[test]
 fn test_find_repeat_number() {
     dbg!(Solution::find_repeat_number(vec![2, 3, 1, 0, 2, 5, 3]));
+    // assert_eq!(Solution::solve(),"output");
+    // TODO
+}
+
+/// 2023-01-04  
+/// 剑指 Offer 53 - I. 在排序数组中查找数字 I  
+/// <https://leetcode.cn/problems/zai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof/>
+impl Solution {
+    /// Code_Description
+    pub fn search(nums: Vec<i32>, target: i32) -> i32 {
+        nums.iter().filter(|x| x == &&target).count() as i32
+    }
+    pub fn search2(nums: Vec<i32>, target: i32) -> i32 {
+        let find = nums.binary_search(&target);
+        println!("{:?}", find);
+        if find.is_ok() {
+            let mut sum = 0;
+            for i in find.unwrap()..nums.len() {
+                if nums[i] == target {
+                    sum += 1;
+                } else {
+                    break;
+                }
+            }
+            for i in (0..find.unwrap()).rev() {
+                if nums[i] == target {
+                    sum += 1;
+                } else {
+                    break;
+                }
+            }
+            return sum;
+        }
+        0
+    }
+}
+#[test]
+fn test_search() {
+    assert_eq!(Solution::search2(vec![5, 7, 7, 8, 8, 10], 8), 2);
+    assert_eq!(Solution::search2(vec![5, 7, 7, 8, 8, 10], 1), 0);
+    assert_eq!(Solution::search2(vec![1], 1), 1);
+    assert_eq!(Solution::search2(vec![2, 2], 2), 2);
+
     // assert_eq!(Solution::solve(),"output");
     // TODO
 }
