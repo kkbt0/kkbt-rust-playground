@@ -173,3 +173,33 @@ fn test_solve() {
     // assert_eq!(Solution::solve(),"output");
     // TODO
 }
+/// 2023-01-04  
+/// 1802. 有界数组中指定下标处的最大值  
+/// <https://leetcode.cn/problems/maximum-value-at-a-given-index-in-a-bounded-array/>
+impl Solution {
+    /// 分类讨论
+    pub fn max_value(n: i32, index: i32, max_sum: i32) -> i32 {
+        let (n, index, max_sum) = (n as usize, index as usize, max_sum as usize);
+        let left = index.min(n - index - 1);
+        let right = n - 1 - left;
+        let s = max_sum - n;
+        let s1 = left * left;
+        let s2 = right * (right - 1) / 2 + (left + 1) * (2 * right - left) / 2;
+        if s <= s1 {
+            (s as f64).sqrt() as i32 + 1
+        } else if s >= s2 {
+            (right + (s - s2) / n + 1) as i32
+        } else {
+            let t = (4 * left + 1) as f64 / 2f64;
+            let delta_x = ((2f64 * (s - s1) as f64 + t * t).sqrt() - t) as i32;
+            delta_x + 1 + left as i32
+        }
+    }
+}
+#[test]
+fn test_max_value() {
+    assert_eq!(Solution::max_value(4, 2, 6), 2);
+    assert_eq!(Solution::max_value(6, 1, 10), 3);
+    assert_eq!(Solution::max_value(3, 2, 18), 7);
+    assert_eq!(Solution::max_value(3, 0, 815094800), 271698267);
+}
