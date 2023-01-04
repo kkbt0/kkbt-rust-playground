@@ -235,7 +235,24 @@ fn test_search() {
     assert_eq!(Solution::search2(vec![5, 7, 7, 8, 8, 10], 1), 0);
     assert_eq!(Solution::search2(vec![1], 1), 1);
     assert_eq!(Solution::search2(vec![2, 2], 2), 2);
+}
 
-    // assert_eq!(Solution::solve(),"output");
-    // TODO
+/// 2023-01-04  
+/// 剑指 Offer 53 - II. 0～n-1中缺失的数字  
+/// <https://leetcode.cn/problems/que-shi-de-shu-zi-lcof/>
+impl Solution {
+    /// 正常是用二分的 偷个懒
+    pub fn missing_number(nums: Vec<i32>) -> i32 {
+        for i in 0..nums.len() {
+            if nums[i] != i as i32 {
+                return i as i32;
+            }
+        }
+        *nums.last().unwrap() + 1
+    }
+}
+#[test]
+fn test_missing_number() {
+    assert_eq!(Solution::missing_number(vec![0, 1, 3]), 2);
+    assert_eq!(Solution::missing_number(vec![0]), 1);
 }
