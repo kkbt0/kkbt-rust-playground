@@ -309,3 +309,29 @@ impl Solution {
 fn test_min_array() {
     dbg!(Solution::min_array(vec![3, 4, 5, 1, 2]), 1);
 }
+
+/// 2023-01-05  
+/// 剑指 Offer 50. 第一个只出现一次的字符
+/// <https://leetcode.cn/problems/di-yi-ge-zhi-chu-xian-yi-ci-de-zi-fu-lcof/>
+impl Solution {
+    /// Code_Description
+    pub fn first_uniq_char(s: String) -> char {
+        let mut arr = [0; 26];
+        for iter in s.bytes() {
+            arr[(iter - b'a') as usize] += 1;
+        }
+        for iter in s.bytes()  {
+            if arr[(iter - b'a') as usize]  == 1 {
+                return iter as char;
+            }
+        }
+        ' '
+    }
+}
+#[test]
+fn test_first_uniq_char() {
+    assert_eq!(Solution::first_uniq_char("abaccdeff".to_string()), 'b');
+    assert_eq!(Solution::first_uniq_char("".to_string()), ' ');
+    // assert_eq!(Solution::solve(),"output");
+    // TODO
+}
