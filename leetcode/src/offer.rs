@@ -268,7 +268,7 @@ impl Solution {
         }
         let n = matrix[0].len();
         for i in 0..matrix.len() {
-            if matrix[i][0] <= target && matrix[i][n-1] >= target {
+            if matrix[i][0] <= target && matrix[i][n - 1] >= target {
                 if matrix[i].binary_search(&target).is_ok() {
                     return true;
                 }
@@ -294,4 +294,18 @@ fn test_find_number_in2_d_array() {
         true
     );
     // TODO
+}
+
+/// 2023-01-05  
+/// 剑指 Offer 11. 旋转数组的最小数字  
+/// <https://leetcode.cn/problems/xuan-zhuan-shu-zu-de-zui-xiao-shu-zi-lcof/>
+impl Solution {
+    /// Code_Description
+    pub fn min_array(numbers: Vec<i32>) -> i32 {
+        *numbers.iter().min().unwrap()
+    }
+}
+#[test]
+fn test_min_array() {
+    dbg!(Solution::min_array(vec![3, 4, 5, 1, 2]), 1);
 }
