@@ -256,3 +256,42 @@ fn test_missing_number() {
     assert_eq!(Solution::missing_number(vec![0, 1, 3]), 2);
     assert_eq!(Solution::missing_number(vec![0]), 1);
 }
+/// 2023-01-05  
+/// 剑指 Offer 04. 二维数组中的查找  
+/// <https://leetcode.cn/problems/er-wei-shu-zu-zhong-de-cha-zhao-lcof/>
+impl Solution {
+    /// 不如暴力搜索
+    pub fn find_number_in2_d_array(matrix: Vec<Vec<i32>>, target: i32) -> bool {
+        let m = matrix.len();
+        if m == 0 || matrix[0].len() == 0 {
+            return false;
+        }
+        let n = matrix[0].len();
+        for i in 0..matrix.len() {
+            if matrix[i][0] <= target && matrix[i][n-1] >= target {
+                if matrix[i].binary_search(&target).is_ok() {
+                    return true;
+                }
+            }
+        }
+        false
+    }
+}
+#[test]
+fn test_find_number_in2_d_array() {
+    // dbg!(Solution::solve());
+    assert_eq!(
+        Solution::find_number_in2_d_array(
+            vec![
+                vec![1, 4, 7, 11, 15],
+                vec![2, 5, 8, 12, 19],
+                vec![3, 6, 9, 16, 22],
+                vec![10, 13, 14, 17, 24],
+                vec![18, 21, 23, 26, 30]
+            ],
+            5
+        ),
+        true
+    );
+    // TODO
+}
