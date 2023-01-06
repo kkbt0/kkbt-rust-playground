@@ -203,6 +203,22 @@
 <a href="#203" id="203">203</a>
 <a href="#204" id="204">204</a>
 <a href="#205" id="205">205</a>
+<a href="#206" id="206">206</a>
+<a href="#207" id="207">207</a>
+<a href="#208" id="208">208</a>
+<a href="#209" id="209">209</a>
+<a href="#210" id="210">210</a>
+<a href="#211" id="211">211</a>
+<a href="#212" id="212">212</a>
+<a href="#213" id="213">213</a>
+<a href="#214" id="214">214</a>
+<a href="#215" id="215">215</a>
+<a href="#216" id="216">216</a>
+<a href="#217" id="217">217</a>
+<a href="#218" id="218">218</a>
+<a href="#219" id="219">219</a>
+<a href="#220" id="220">220</a>
+<a href="#221" id="221">221</a>
 </pre><pre class="rust"><code><span class="doccomment">//! 2023-01  用于每日一题  
 </span><span class="kw">use </span>std::collections::HashSet;
 
@@ -408,5 +424,20 @@
     <span class="macro">assert_eq!</span>(Solution::max_value(<span class="number">3</span>, <span class="number">2</span>, <span class="number">18</span>), <span class="number">7</span>);
     <span class="macro">assert_eq!</span>(Solution::max_value(<span class="number">3</span>, <span class="number">0</span>, <span class="number">815094800</span>), <span class="number">271698267</span>);
 }
-</code></pre></div>
+<span class="doccomment">/// 2023-01-06  
+/// 2180. 统计各位数字之和为偶数的整数个数  
+/// &lt;https://leetcode.cn/problems/count-integers-with-even-digit-sum/&gt;
+</span><span class="kw">impl </span>Solution {
+    <span class="kw">pub fn </span>count_even(num: i32) -&gt; i32 {
+        <span class="kw">let </span>sum = num.to_string().as_bytes().iter().fold(<span class="number">0i32</span>,|<span class="kw-2">mut </span>sum, x |{
+            sum += <span class="kw-2">*</span>x <span class="kw">as </span>i32 -<span class="number">48</span>;
+            sum
+        }); <span class="comment">// 求数位和
+        </span><span class="kw">if </span>sum % <span class="number">2 </span>== <span class="number">0 </span>{
+            <span class="kw">return </span>num/<span class="number">2</span>;
+        } <span class="kw">else </span>{
+            <span class="kw">return </span>(num-<span class="number">1</span>)/<span class="number">2</span>;
+        }
+    }
+}</code></pre></div>
 </section></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="leetcode" data-themes="" data-resource-suffix="" data-rustdoc-version="1.68.0-nightly (8dfb33954 2022-12-25)" data-search-js="search-181581080540673f.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-58836c674e2f7bd2.css" ></div></body></html>
