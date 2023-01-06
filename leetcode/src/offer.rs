@@ -335,3 +335,95 @@ fn test_first_uniq_char() {
     // assert_eq!(Solution::solve(),"output");
     // TODO
 }
+
+#[derive(Debug, PartialEq, Eq)]
+pub struct TreeNode {
+  pub val: i32,
+  pub left: Option<Rc<RefCell<TreeNode>>>,
+  pub right: Option<Rc<RefCell<TreeNode>>>,
+}
+
+impl TreeNode {
+  #[inline]
+  pub fn new(val: i32) -> Self {
+    TreeNode {
+      val,
+      left: None,
+      right: None
+    }
+  }
+}
+/// 2023-01-06  
+/// 剑指 Offer 32 - I. 从上到下打印二叉树  
+/// <https://leetcode.cn/problems/cong-shang-dao-xia-da-yin-er-cha-shu-lcof/>
+use std::rc::Rc;
+use std::cell::RefCell;
+impl Solution {
+    /// Rust 写树相关的代码总是报错 总算用 Clone 通过了编译器检查  
+    /// 原理是个队列 每次取出第一个 node 压入 node 的左右节点 0ms 2.2mb  
+    pub fn level_order(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {
+        if root.is_none() { return  vec![];}
+        let mut list = Vec::new();
+        let mut ans = Vec::new();
+        let mut node = root.unwrap();
+        list.push(node.clone());
+        while !list.is_empty() {
+            node = list.first().unwrap().clone();
+            if let Some(x) = node.borrow().left.clone() {
+                list.push(x);
+            }
+            if let Some(x) = node.borrow().right.clone() {
+                list.push(x);
+            }
+            let first = list.remove(0).borrow().val;
+            ans.push(first);
+        }
+        ans
+    }
+    /// 试试 take 和 level_order 是一个思路  
+    /// 4ms 2.1mb 不如用 clone :)
+    pub fn level_order3(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {
+        if root.is_none() { return  vec![];}
+        let mut list = Vec::new();
+        let mut ans = Vec::new();
+        let mut node = root.unwrap();
+        list.push(node);
+        while !list.is_empty() {
+            node = list.first().unwrap().to_owned();
+            if let Some(x) = node.borrow_mut().left.take() {
+                list.push(x);
+            }
+            if let Some(x) = node.borrow_mut().right.take()  {
+                list.push(x);
+            }
+            let val = list.remove(0).borrow().val;
+            ans.push(val);
+        }
+        ans
+    }
+    /// 作者：virtuereturner  
+    /// 链接：<https://leetcode.cn/problems/cong-shang-dao-xia-da-yin-er-cha-shu-lcof/solution/rust-by-virtuereturner-ciwy/>  
+    /// 来源：力扣（LeetCode）
+    pub fn level_order2(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {
+        if root.is_none() {return Vec::new();}
+        let mut top_vec = vec![root.unwrap()];
+        let mut ans = Vec::new();
+        while !top_vec.is_empty(){
+            let mut bottom_vec = Vec::new();
+            for node in top_vec{
+                let mut n_ref = node.borrow_mut();
+                ans.push(n_ref.val);
+                let (left,right) = (n_ref.left.take(),n_ref.right.take());
+                if let Some(n_left) = left {
+                    bottom_vec.push(n_left);
+                }
+                if let Some(n_right) = right{
+                    bottom_vec.push(n_right);
+                }
+            }
+            top_vec = bottom_vec;
+        }
+        ans
+    }
+}
+
