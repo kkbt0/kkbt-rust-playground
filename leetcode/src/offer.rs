@@ -320,8 +320,8 @@ impl Solution {
         for iter in s.bytes() {
             arr[(iter - b'a') as usize] += 1;
         }
-        for iter in s.bytes()  {
-            if arr[(iter - b'a') as usize]  == 1 {
+        for iter in s.bytes() {
+            if arr[(iter - b'a') as usize] == 1 {
                 return iter as char;
             }
         }
@@ -338,31 +338,33 @@ fn test_first_uniq_char() {
 
 #[derive(Debug, PartialEq, Eq)]
 pub struct TreeNode {
-  pub val: i32,
-  pub left: Option<Rc<RefCell<TreeNode>>>,
-  pub right: Option<Rc<RefCell<TreeNode>>>,
+    pub val: i32,
+    pub left: Option<Rc<RefCell<TreeNode>>>,
+    pub right: Option<Rc<RefCell<TreeNode>>>,
 }
 
 impl TreeNode {
-  #[inline]
-  pub fn new(val: i32) -> Self {
-    TreeNode {
-      val,
-      left: None,
-      right: None
+    #[inline]
+    pub fn new(val: i32) -> Self {
+        TreeNode {
+            val,
+            left: None,
+            right: None,
+        }
     }
-  }
 }
+use std::cell::RefCell;
 /// 2023-01-06  
 /// 剑指 Offer 32 - I. 从上到下打印二叉树  
 /// <https://leetcode.cn/problems/cong-shang-dao-xia-da-yin-er-cha-shu-lcof/>
 use std::rc::Rc;
-use std::cell::RefCell;
 impl Solution {
     /// Rust 写树相关的代码总是报错 总算用 Clone 通过了编译器检查  
     /// 原理是个队列 每次取出第一个 node 压入 node 的左右节点 0ms 2.2mb  
     pub fn level_order(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {
-        if root.is_none() { return  vec![];}
+        if root.is_none() {
+            return vec![];
+        }
         let mut list = Vec::new();
         let mut ans = Vec::new();
         let mut node = root.unwrap();
@@ -383,7 +385,9 @@ impl Solution {
     /// 试试 take 和 level_order 是一个思路  
     /// 4ms 2.1mb 不如用 clone :)
     pub fn level_order3(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {
-        if root.is_none() { return  vec![];}
+        if root.is_none() {
+            return vec![];
+        }
         let mut list = Vec::new();
         let mut ans = Vec::new();
         let mut node = root.unwrap();
@@ -393,7 +397,7 @@ impl Solution {
             if let Some(x) = node.borrow_mut().left.take() {
                 list.push(x);
             }
-            if let Some(x) = node.borrow_mut().right.take()  {
+            if let Some(x) = node.borrow_mut().right.take() {
                 list.push(x);
             }
             let val = list.remove(0).borrow().val;
@@ -405,19 +409,21 @@ impl Solution {
     /// 链接：<https://leetcode.cn/problems/cong-shang-dao-xia-da-yin-er-cha-shu-lcof/solution/rust-by-virtuereturner-ciwy/>  
     /// 来源：力扣（LeetCode）
     pub fn level_order2(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {
-        if root.is_none() {return Vec::new();}
+        if root.is_none() {
+            return Vec::new();
+        }
         let mut top_vec = vec![root.unwrap()];
         let mut ans = Vec::new();
-        while !top_vec.is_empty(){
+        while !top_vec.is_empty() {
             let mut bottom_vec = Vec::new();
-            for node in top_vec{
+            for node in top_vec {
                 let mut n_ref = node.borrow_mut();
                 ans.push(n_ref.val);
-                let (left,right) = (n_ref.left.take(),n_ref.right.take());
+                let (left, right) = (n_ref.left.take(), n_ref.right.take());
                 if let Some(n_left) = left {
                     bottom_vec.push(n_left);
                 }
-                if let Some(n_right) = right{
+                if let Some(n_right) = right {
                     bottom_vec.push(n_right);
                 }
             }
@@ -425,5 +431,57 @@ impl Solution {
         }
         ans
     }
+    #[cfg_attr(doc, aquamarine::aquamarine)]
+    /// <https://leetcode.cn/problems/cong-shang-dao-xia-da-yin-er-cha-shu-ii-lcof/solution/han-shu-shi-diao-yong-by-logicycle-n-4xzb/>  
+    /// 很好的思路 flatten将数组元素铺平，第二次flatten在迭代器中，保留Some变体，None变体剔除  
+    /// ```mermaid 
+    /// graph TB
+    /// 3---9
+    /// 3---20
+    /// 9---15
+    /// 9---7
+    /// ```
+    /// 
+    ///  `[3] -> [9,20] -> [15,7,none,none]`
+    /// ![](https://cdn.ftls.xyz/images/2022/12/20230106131703.png)
+    pub fn level_order4(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {
+        if root.is_none() {
+            return vec![];
+        }
+        let mut list = vec![root.unwrap()];
+        let mut ret: Vec<Vec<i32>> = vec![];
+        while !list.is_empty() {
+            ret.push(list.iter().map(|r| r.borrow().val).collect());
+            list = list
+                .iter()
+                .flat_map(|r| vec![r.borrow().left.clone(), r.borrow().right.clone()])
+                .flatten()
+                .collect();
+        }
+        ret.into_iter().flatten().collect::<Vec<i32>>()
+    }
 }
-
+/// 2023-01-06  
+/// 剑指 Offer 32 - II. 从上到下打印二叉树 II  
+/// <https://leetcode.cn/problems/cong-shang-dao-xia-da-yin-er-cha-shu-ii-lcof/>
+impl Solution {
+    /// 要是按 数组输入 答案会更简单些 这样写其实也有很多写法 比如存层数
+    pub fn level_order5(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<Vec<i32>> {
+        if root.is_none() {
+            return vec![];
+        }
+        let mut list = vec![root.unwrap()];
+        let mut ret = vec![];
+        while !list.is_empty() {
+            ret.push(list.iter().map(|r| r.borrow().val).collect());
+            list = list
+                .iter()
+                //展开成Option<Rc<RefCell<TreeNode>>>的队列
+                .flat_map(|r| vec![r.borrow().left.clone(), r.borrow().right.clone()])
+                //Rc<RefCell<TreeNode>>的队列，其中None变体被剔除
+                .flatten()
+                .collect();
+        }
+        ret
+    }
+}

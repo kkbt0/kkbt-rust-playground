@@ -1,1 +1,1 @@
-window.ALL_CRATES = ["entry","kkbt","leetcode"];
+window.ALL_CRATES = ["aquamarine","either","entry","itertools","kkbt","leetcode","proc_macro2","proc_macro_error","proc_macro_error_attr","quote","syn","unicode_ident"];

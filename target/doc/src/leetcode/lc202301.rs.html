@@ -429,15 +429,16 @@
 /// &lt;https://leetcode.cn/problems/count-integers-with-even-digit-sum/&gt;
 </span><span class="kw">impl </span>Solution {
     <span class="kw">pub fn </span>count_even(num: i32) -&gt; i32 {
-        <span class="kw">let </span>sum = num.to_string().as_bytes().iter().fold(<span class="number">0i32</span>,|<span class="kw-2">mut </span>sum, x |{
-            sum += <span class="kw-2">*</span>x <span class="kw">as </span>i32 -<span class="number">48</span>;
+        <span class="kw">let </span>sum = num.to_string().as_bytes().iter().fold(<span class="number">0i32</span>, |<span class="kw-2">mut </span>sum, x| {
+            sum += <span class="kw-2">*</span>x <span class="kw">as </span>i32 - <span class="number">48</span>;
             sum
         }); <span class="comment">// 求数位和
         </span><span class="kw">if </span>sum % <span class="number">2 </span>== <span class="number">0 </span>{
-            <span class="kw">return </span>num/<span class="number">2</span>;
+            <span class="kw">return </span>num / <span class="number">2</span>;
         } <span class="kw">else </span>{
-            <span class="kw">return </span>(num-<span class="number">1</span>)/<span class="number">2</span>;
+            <span class="kw">return </span>(num - <span class="number">1</span>) / <span class="number">2</span>;
         }
     }
-}</code></pre></div>
+}
+</code></pre></div>
 </section></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="leetcode" data-themes="" data-resource-suffix="" data-rustdoc-version="1.68.0-nightly (8dfb33954 2022-12-25)" data-search-js="search-181581080540673f.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-58836c674e2f7bd2.css" ></div></body></html>

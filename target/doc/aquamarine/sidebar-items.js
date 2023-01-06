@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"attr":[["aquamarine","Aquamarine is a proc-macro that adds Mermaid diagrams to rustdoc"]]};

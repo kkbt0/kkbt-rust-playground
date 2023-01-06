@@ -208,14 +208,14 @@ fn test_max_value() {
 /// <https://leetcode.cn/problems/count-integers-with-even-digit-sum/>
 impl Solution {
     pub fn count_even(num: i32) -> i32 {
-        let sum = num.to_string().as_bytes().iter().fold(0i32,|mut sum, x |{
-            sum += *x as i32 -48;
+        let sum = num.to_string().as_bytes().iter().fold(0i32, |mut sum, x| {
+            sum += *x as i32 - 48;
             sum
         }); // 求数位和
         if sum % 2 == 0 {
-            return num/2;
+            return num / 2;
         } else {
-            return (num-1)/2;
+            return (num - 1) / 2;
         }
     }
 }

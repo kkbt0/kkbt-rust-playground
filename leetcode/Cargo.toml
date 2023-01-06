@@ -9,3 +9,4 @@ repository = "https://gitee.com/kkbt/rust-play-ground"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+aquamarine = '0.1.12' # 允许 cargo doc 里使用 mermaid
