@@ -485,3 +485,33 @@ impl Solution {
         ret
     }
 }
+/// 2023-01-06  
+/// 剑指 Offer 32 - III. 从上到下打印二叉树 III  
+/// <https://leetcode.cn/problems/cong-shang-dao-xia-da-yin-er-cha-shu-iii-lcof/>
+impl Solution {
+    pub fn level_order6(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<Vec<i32>> {
+        if root.is_none() {
+            return vec![];
+        }
+        let mut list = vec![root.unwrap()];
+        let mut ret = vec![];
+        let mut flag = true;
+        while !list.is_empty() {
+            if flag {
+                ret.push(list.iter().map(|r| r.borrow().val).collect::<Vec<i32>>());
+                flag = false;
+            } else {
+                let mut tem = list.iter().map(|r| r.borrow().val).collect::<Vec<i32>>();
+                tem.reverse();
+                ret.push(tem);
+                flag = true;
+            }
+            list = list
+                .iter()
+                .flat_map(|r| vec![r.borrow().left.clone(), r.borrow().right.clone()])
+                .flatten()
+                .collect();
+        }
+        ret
+    }
+}
