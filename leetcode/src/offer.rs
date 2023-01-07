@@ -434,14 +434,14 @@ impl Solution {
     #[cfg_attr(doc, aquamarine::aquamarine)]
     /// <https://leetcode.cn/problems/cong-shang-dao-xia-da-yin-er-cha-shu-ii-lcof/solution/han-shu-shi-diao-yong-by-logicycle-n-4xzb/>  
     /// 很好的思路 flatten将数组元素铺平，第二次flatten在迭代器中，保留Some变体，None变体剔除  
-    /// ```mermaid 
+    /// ```mermaid
     /// graph TB
     /// 3---9
     /// 3---20
     /// 9---15
     /// 9---7
     /// ```
-    /// 
+    ///
     ///  `[3] -> [9,20] -> [15,7,none,none]`
     /// ![](https://cdn.ftls.xyz/images/2022/12/20230106131703.png)
     pub fn level_order4(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {
@@ -465,7 +465,8 @@ impl Solution {
 /// 剑指 Offer 32 - II. 从上到下打印二叉树 II  
 /// <https://leetcode.cn/problems/cong-shang-dao-xia-da-yin-er-cha-shu-ii-lcof/>
 impl Solution {
-    /// 要是按 数组输入 答案会更简单些 这样写其实也有很多写法 比如存层数
+    /// 要是按 数组输入 答案会更简单些 这样写其实也有很多写法 比如存层数  
+    /// <https://leetcode.cn/problems/cong-shang-dao-xia-da-yin-er-cha-shu-ii-lcof/solution/han-shu-shi-diao-yong-by-logicycle-n-4xzb/>
     pub fn level_order5(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<Vec<i32>> {
         if root.is_none() {
             return vec![];
@@ -513,5 +514,113 @@ impl Solution {
                 .collect();
         }
         ret
+    }
+}
+/// 2023-01-07  
+/// 剑指 Offer 26. 树的子结构  
+/// <https://leetcode.cn/problems/shu-de-zi-jie-gou-lcof/>
+impl Solution {
+    /// 借助 函数化 思想  失败 [1,0,1,-4,-3] [1,-4]  
+    /// 转换为动态数组 `[[Some(1)], [Some(0), Some(1)], [Some(-4), Some(-3), None, None]] [[Some(1)],[Some(-4)]]`  
+    /// 不会简单多少  
+    /// <https://leetcode.cn/problems/shu-de-zi-jie-gou-lcof/solution/by-maxlz1-6co3/>
+    pub fn is_sub_structure(
+        a: Option<Rc<RefCell<TreeNode>>>,
+        b: Option<Rc<RefCell<TreeNode>>>,
+    ) -> bool {
+        if a.is_none() || b.is_none() {
+            return false;
+        }
+        let a_borrow = a.as_ref().unwrap().borrow();
+        Self::is_sub(&a, &b)
+            || Self::is_sub_structure(a_borrow.left.clone(), b.clone())
+            || Self::is_sub_structure(a_borrow.right.clone(), b.clone())
+    }
+
+    fn is_sub(a: &Option<Rc<RefCell<TreeNode>>>, b: &Option<Rc<RefCell<TreeNode>>>) -> bool {
+        if b.is_none() {
+            return true;
+        }
+        if a.is_none() {
+            return false;
+        }
+        let node1 = a.as_ref().unwrap().borrow();
+        let node2 = b.as_ref().unwrap().borrow();
+        node1.val == node2.val
+            && Self::is_sub(&node1.left, &node2.left)
+            && Self::is_sub(&node1.right, &node2.right)
+    }
+}
+/// 2023-01-07  
+/// 剑指 Offer 27. 二叉树的镜像  
+/// <https://leetcode.cn/problems/er-cha-shu-de-jing-xiang-lcof/>
+impl Solution {
+    /// <https://leetcode.cn/problems/er-cha-shu-de-jing-xiang-lcof/solution/rust-0ms-ti-jie-memreplace-by-chang-tiao-ren/>
+    pub fn mirror_tree(root: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<TreeNode>>> {
+        fn mirror(root: &mut Option<Rc<RefCell<TreeNode>>>) {
+            if let Some(node) = root {
+                let mut n = node.borrow_mut();
+                let lt = std::mem::replace(&mut n.left, None);
+                let rt = std::mem::replace(&mut n.right, lt);
+                let _ = std::mem::replace(&mut n.left, rt);
+                mirror(&mut n.left);
+                mirror(&mut n.right);
+            }
+        }
+        let mut root = root;
+        mirror(&mut root);
+        root
+    }
+}
+/// 2023-01-07  
+/// 剑指 Offer 28. 对称的二叉树  
+/// <https://leetcode.cn/problems/dui-cheng-de-er-cha-shu-lcof/>
+impl Solution {
+    /// Code_Description
+    pub fn is_symmetric(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
+        let arr = Self::tree2arr(root);
+        for iter in &arr {
+            for i in 0..iter.len() / 2 {
+                // 0 1
+                if iter[i] != iter[iter.len() - 1 - i] {
+                    return false;
+                }
+            }
+        }
+        true
+    }
+    fn tree2arr(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<Vec<Option<i32>>> {
+        if root.is_none() {
+            return vec![];
+        }
+        let mut list = vec![root];
+        let mut ret = vec![];
+        while list.iter().filter(|x| x.is_some()).count() != 0 {
+            ret.push(
+                list.iter()
+                    .map(|r| {
+                        if r.is_some() {
+                            Some(r.as_ref().unwrap().borrow().val)
+                        } else {
+                            None
+                        }
+                    })
+                    .collect::<Vec<Option<i32>>>(),
+            );
+            list = list
+                .iter()
+                .flat_map(|r| {
+                    if r.is_some() {
+                        vec![
+                            r.as_ref().unwrap().borrow().left.clone(),
+                            r.as_ref().unwrap().borrow().right.clone(),
+                        ]
+                    } else {
+                        vec![None, None]
+                    }
+                })
+                .collect();
+        }
+        ret // ret.into_iter().flatten().collect::<Vec<i32>>()
     }
 }
