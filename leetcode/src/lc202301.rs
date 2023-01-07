@@ -219,3 +219,39 @@ impl Solution {
         }
     }
 }
+
+/// 2023-01-07  
+/// 1658. 将 x 减到 0 的最小操作数  
+/// <https://leetcode.cn/problems/minimum-operations-to-reduce-x-to-zero/>
+impl Solution {
+    /// Code_Description
+    pub fn min_operations(nums: Vec<i32>, x: i32) -> i32 {
+        let mut l = nums.len();
+        let mut r = 0;
+        let mut sum = nums.iter().sum::<i32>();
+        let mut ret = -1;
+        while r < nums.len() {
+            if sum == x && (ret == -1 || l + r < ret as usize) {
+                ret = (l + r) as i32;
+            }
+            if (sum > x && l > 0) || l + r >= nums.len() {
+                l -= 1;
+                sum -= nums[l];
+            } else {
+                r += 1;
+                sum += nums[nums.len() - r];
+            }
+        }
+        ret
+    }
+}
+#[test]
+fn test_min_operations() {
+    let ve1 = vec![1, 1, 4, 2, 3];
+    assert_eq!(Solution::min_operations(ve1, 5), 2); // 2
+    assert_eq!(Solution::min_operations(vec![5, 6, 7, 8, 9], 4), -1); // -1
+    assert_eq!(Solution::min_operations(vec![3, 2, 20, 1, 1, 3], 10), 5);
+    assert_eq!(Solution::min_operations(vec![1, 1], 3), -1); // -1
+    assert_eq!(Solution::min_operations(vec![1000,1,1,2,3],1004), 3); // -1
+    assert_eq!(Solution::min_operations(vec![8828,9581,49,9818,9974,9869,9991,10000,10000,10000,9999,9993,9904,8819,1231,6309],134365), 16);
+}
