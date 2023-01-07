@@ -252,6 +252,15 @@ fn test_min_operations() {
     assert_eq!(Solution::min_operations(vec![5, 6, 7, 8, 9], 4), -1); // -1
     assert_eq!(Solution::min_operations(vec![3, 2, 20, 1, 1, 3], 10), 5);
     assert_eq!(Solution::min_operations(vec![1, 1], 3), -1); // -1
-    assert_eq!(Solution::min_operations(vec![1000,1,1,2,3],1004), 3); // -1
-    assert_eq!(Solution::min_operations(vec![8828,9581,49,9818,9974,9869,9991,10000,10000,10000,9999,9993,9904,8819,1231,6309],134365), 16);
+    assert_eq!(Solution::min_operations(vec![1000, 1, 1, 2, 3], 1004), 3); // -1
+    assert_eq!(
+        Solution::min_operations(
+            vec![
+                8828, 9581, 49, 9818, 9974, 9869, 9991, 10000, 10000, 10000, 9999, 9993, 9904,
+                8819, 1231, 6309
+            ],
+            134365
+        ),
+        16
+    );
 }
