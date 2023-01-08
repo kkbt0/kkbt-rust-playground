@@ -563,3 +563,36 @@ fn test_solve() {
         "hi?"
     );
 }
+
+/// 2023-01-08  
+/// 2437. 有效时间的数目  
+/// <https://leetcode.cn/problems/number-of-valid-clock-times/>
+impl Solution {
+    /// 0-2 0-3/0-9 0-5 0-9
+    pub fn count_time(time: String) -> i32 {
+        let time = time.chars().collect::<Vec<_>>();
+        let hour = match (time[0], time[1]) {
+            ('?', '?') => 24,
+            ('?', '0'..='3') => 3,
+            ('?', '4'..='9') => 2,
+            ('0' | '1', '?') => 10,
+            ('2', '?') => 4,
+            _ => 1,
+        };
+        let minute = match (time[3], time[4]) {
+            ('?', '?') => 60,
+            ('?', _) => 6,
+            (_, '?') => 10,
+            _ => 1,
+        };
+        hour * minute
+    }
+}
+#[test]
+fn test_count_time() {
+    assert_eq!(Solution::count_time(String::from("?5:00")), 2);
+    assert_eq!(Solution::count_time(String::from("0?:0?")), 100);
+    assert_eq!(Solution::count_time(String::from("??:??")), 1440);
+    assert_eq!(Solution::count_time(String::from("?2:16")), 3);
+    assert_eq!(Solution::count_time(String::from("?4:22")), 2);
+}
