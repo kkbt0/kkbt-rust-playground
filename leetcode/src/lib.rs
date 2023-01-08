@@ -2,12 +2,12 @@
 //! Gitee Repository <https://gitee.com/kkbt/rust-play-ground>  
 //! by [恐咖兵糖](https://www.ftls.xyz)
 
+pub mod btree;
 pub mod lc202212; // 2022-12
 pub mod lc202212ap; // 2022-12
 pub mod lc202301; // 2023-01
 pub mod lc202301ap; // 2023-01
 pub mod offer; // 2023-01
-pub mod btree;
 
 #[allow(dead_code)]
 mod qa {

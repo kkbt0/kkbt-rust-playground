@@ -50,21 +50,21 @@ impl Solution {
         }
         res
     }
-        /// <https://leetcode.cn/problems/binary-tree-inorder-traversal/solution/94-er-cha-shu-de-zhong-xu-bian-li-by-tab-a3ff/>
-        pub fn inorder_traversal2(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {
-            let mut ans = vec![];
-            let mut stack = vec![];
-            let mut root = root;
-            while !stack.is_empty() || root.is_some() {
-                while let Some(node) = root {
-                    root = node.borrow_mut().left.take();
-                    stack.push(node);
-                }
-                if let Some(node) = stack.pop() {
-                    ans.push(node.borrow().val);
-                    root = node.borrow_mut().right.take();
-                }
+    /// <https://leetcode.cn/problems/binary-tree-inorder-traversal/solution/94-er-cha-shu-de-zhong-xu-bian-li-by-tab-a3ff/>
+    pub fn inorder_traversal2(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {
+        let mut ans = vec![];
+        let mut stack = vec![];
+        let mut root = root;
+        while !stack.is_empty() || root.is_some() {
+            while let Some(node) = root {
+                root = node.borrow_mut().left.take();
+                stack.push(node);
             }
-            ans
+            if let Some(node) = stack.pop() {
+                ans.push(node.borrow().val);
+                root = node.borrow_mut().right.take();
+            }
         }
+        ans
+    }
 }
