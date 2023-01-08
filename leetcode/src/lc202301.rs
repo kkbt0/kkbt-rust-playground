@@ -264,3 +264,24 @@ fn test_min_operations() {
         16
     );
 }
+/// 2023-01-08  
+/// 2185. 统计包含给定前缀的字符串  
+/// <https://leetcode.cn/problems/counting-words-with-a-given-prefix/>
+impl Solution {
+    /// 迭代器
+    pub fn prefix_count(words: Vec<String>, pref: String) -> i32 {
+        words.iter().filter(|x| x.starts_with(&pref)).count() as i32
+    }
+}
+#[test]
+fn test_prefix_count() {
+    dbg!(Solution::prefix_count(
+        vec![
+            "pay".to_string(),
+            "attention".to_string(),
+            "practice".to_string(),
+            "attend".to_string()
+        ],
+        "at".to_string()
+    ));
+}
