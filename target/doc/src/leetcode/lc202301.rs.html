@@ -278,6 +278,13 @@
 <a href="#278" id="278">278</a>
 <a href="#279" id="279">279</a>
 <a href="#280" id="280">280</a>
+<a href="#281" id="281">281</a>
+<a href="#282" id="282">282</a>
+<a href="#283" id="283">283</a>
+<a href="#284" id="284">284</a>
+<a href="#285" id="285">285</a>
+<a href="#286" id="286">286</a>
+<a href="#287" id="287">287</a>
 </pre><pre class="rust"><code><span class="doccomment">//! 2023-01  用于每日一题  
 </span><span class="kw">use </span>std::collections::HashSet;
 
@@ -506,46 +513,23 @@
 </span><span class="kw">impl </span>Solution {
     <span class="doccomment">/// Code_Description
     </span><span class="kw">pub fn </span>min_operations(nums: Vec&lt;i32&gt;, x: i32) -&gt; i32 {
-        <span class="kw">let </span><span class="kw-2">mut </span>nums2 = nums.clone();
-        nums2.reverse();
-
-        <span class="kw">let </span>a = <span class="self">Self</span>::helper(nums, x);
-        <span class="kw">let </span>b = <span class="self">Self</span>::helper(nums2, x);
-        <span class="kw">if </span>a == i32::MAX &amp;&amp; b == i32::MAX {
-            -<span class="number">1
-        </span>} <span class="kw">else </span>{
-            a.min(b)
-        }
-    }
-    <span class="kw">fn </span>helper(nums: Vec&lt;i32&gt;, x: i32) -&gt; i32 {
-        <span class="kw">let </span>(<span class="kw-2">mut </span>left, <span class="kw-2">mut </span>right) = (-<span class="number">1</span>, nums.len() <span class="kw">as </span>i32);
-        <span class="kw">let </span><span class="kw-2">mut </span>ans = <span class="number">0</span>;
-        <span class="kw">let </span><span class="kw-2">mut </span>now = <span class="number">0</span>;
-        <span class="kw">let </span><span class="kw-2">mut </span>find = <span class="bool-val">false</span>;
-        <span class="kw">while </span>left &lt; right  {
-            <span class="macro">println!</span>(<span class="string">&quot;Now {}  left: {}, right: {} ans: {}&quot;</span>, now, left, right, ans);
-            <span class="kw">if </span>now == x {
-                <span class="macro">println!</span>(<span class="string">&quot;Find it&quot;</span>);
-                find = <span class="bool-val">true</span>;
-                <span class="kw">break</span>;
-            } <span class="kw">else if </span>now &gt; x {
-                ans = left + <span class="number">2</span>;
-                left += <span class="number">1</span>;
-                right = nums.len() <span class="kw">as </span>i32;
-                <span class="kw">if </span>left &gt;= nums.len() <span class="kw">as </span>i32 {<span class="kw">break</span>; }
-                now = nums[<span class="number">0</span>..=left <span class="kw">as </span>usize].iter().sum::&lt;i32&gt;();
-            } <span class="kw">else if </span>now &lt; x {
-                ans += <span class="number">1</span>;
-                right -= <span class="number">1</span>;
-                <span class="kw">if </span>right &lt; <span class="number">0 </span>{<span class="kw">break</span>; }
-                now += nums[right <span class="kw">as </span>usize];
+        <span class="kw">let </span><span class="kw-2">mut </span>l = nums.len();
+        <span class="kw">let </span><span class="kw-2">mut </span>r = <span class="number">0</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>sum = nums.iter().sum::&lt;i32&gt;();
+        <span class="kw">let </span><span class="kw-2">mut </span>ret = -<span class="number">1</span>;
+        <span class="kw">while </span>r &lt; nums.len() {
+            <span class="kw">if </span>sum == x &amp;&amp; (ret == -<span class="number">1 </span>|| l + r &lt; ret <span class="kw">as </span>usize) {
+                ret = (l + r) <span class="kw">as </span>i32;
+            }
+            <span class="kw">if </span>(sum &gt; x &amp;&amp; l &gt; <span class="number">0</span>) || l + r &gt;= nums.len() {
+                l -= <span class="number">1</span>;
+                sum -= nums[l];
+            } <span class="kw">else </span>{
+                r += <span class="number">1</span>;
+                sum += nums[nums.len() - r];
             }
         }
-        <span class="kw">if </span>find {
-            ans
-        } <span class="kw">else </span>{
-            i32::MAX
-        }
+        ret
     }
 }
 <span class="attr">#[test]
@@ -555,8 +539,38 @@
     </span><span class="macro">assert_eq!</span>(Solution::min_operations(<span class="macro">vec!</span>[<span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>], <span class="number">4</span>), -<span class="number">1</span>); <span class="comment">// -1
     </span><span class="macro">assert_eq!</span>(Solution::min_operations(<span class="macro">vec!</span>[<span class="number">3</span>, <span class="number">2</span>, <span class="number">20</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">3</span>], <span class="number">10</span>), <span class="number">5</span>);
     <span class="macro">assert_eq!</span>(Solution::min_operations(<span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">1</span>], <span class="number">3</span>), -<span class="number">1</span>); <span class="comment">// -1
-    </span><span class="macro">assert_eq!</span>(Solution::min_operations(<span class="macro">vec!</span>[<span class="number">1000</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],<span class="number">1004</span>), <span class="number">3</span>); <span class="comment">// -1
-    </span><span class="macro">assert_eq!</span>(Solution::min_operations(<span class="macro">vec!</span>[<span class="number">8828</span>,<span class="number">9581</span>,<span class="number">49</span>,<span class="number">9818</span>,<span class="number">9974</span>,<span class="number">9869</span>,<span class="number">9991</span>,<span class="number">10000</span>,<span class="number">10000</span>,<span class="number">10000</span>,<span class="number">9999</span>,<span class="number">9993</span>,<span class="number">9904</span>,<span class="number">8819</span>,<span class="number">1231</span>,<span class="number">6309</span>],<span class="number">134365</span>), <span class="number">16</span>);
+    </span><span class="macro">assert_eq!</span>(Solution::min_operations(<span class="macro">vec!</span>[<span class="number">1000</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], <span class="number">1004</span>), <span class="number">3</span>); <span class="comment">// -1
+    </span><span class="macro">assert_eq!</span>(
+        Solution::min_operations(
+            <span class="macro">vec!</span>[
+                <span class="number">8828</span>, <span class="number">9581</span>, <span class="number">49</span>, <span class="number">9818</span>, <span class="number">9974</span>, <span class="number">9869</span>, <span class="number">9991</span>, <span class="number">10000</span>, <span class="number">10000</span>, <span class="number">10000</span>, <span class="number">9999</span>, <span class="number">9993</span>, <span class="number">9904</span>,
+                <span class="number">8819</span>, <span class="number">1231</span>, <span class="number">6309
+            </span>],
+            <span class="number">134365
+        </span>),
+        <span class="number">16
+    </span>);
+}
+<span class="doccomment">/// 2023-01-08  
+/// 2185. 统计包含给定前缀的字符串  
+/// &lt;https://leetcode.cn/problems/counting-words-with-a-given-prefix/&gt;
+</span><span class="kw">impl </span>Solution {
+    <span class="doccomment">/// 迭代器
+    </span><span class="kw">pub fn </span>prefix_count(words: Vec&lt;String&gt;, pref: String) -&gt; i32 {
+        words.iter().filter(|x| x.starts_with(<span class="kw-2">&amp;</span>pref)).count() <span class="kw">as </span>i32
+    }
+}
+<span class="attr">#[test]
+</span><span class="kw">fn </span>test_prefix_count() {
+    <span class="macro">dbg!</span>(Solution::prefix_count(
+        <span class="macro">vec!</span>[
+            <span class="string">&quot;pay&quot;</span>.to_string(),
+            <span class="string">&quot;attention&quot;</span>.to_string(),
+            <span class="string">&quot;practice&quot;</span>.to_string(),
+            <span class="string">&quot;attend&quot;</span>.to_string()
+        ],
+        <span class="string">&quot;at&quot;</span>.to_string()
+    ));
 }
 </code></pre></div>
 </section></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="leetcode" data-themes="" data-resource-suffix="" data-rustdoc-version="1.68.0-nightly (8dfb33954 2022-12-25)" data-search-js="search-181581080540673f.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-58836c674e2f7bd2.css" ></div></body></html>

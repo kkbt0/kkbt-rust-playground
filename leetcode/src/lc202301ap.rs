@@ -433,7 +433,7 @@ fn test_reformat_number() {
 /// <https://leetcode.cn/problems/sort-array-by-parity/>
 impl Solution {
     /// 双指针
-    /// nums[i] &1  和 nums[i] %2 是等效的 看起来前者执行快但是内存消耗会大一点  
+    /// `nums[i] &1`  和 `nums[i] %2` 是等效的 看起来前者执行快但是内存消耗会大一点  
     pub fn sort_array_by_parity(mut nums: Vec<i32>) -> Vec<i32> {
         let (mut i, mut j) = (0usize, nums.len() - 1);
         while i < j {
@@ -480,7 +480,7 @@ fn test_minimum_sum() {
 /// <https://leetcode.cn/problems/evaluate-the-bracket-pairs-of-a-string/>
 impl Solution {
     /// 模拟，先把 knowledge 的对应关系存到 map 里。然后 Vec 存储左右括号位置，用于字符串切片。然后根据位置数据用字符串切片。  
-    /// 这道题用 s = s.replace(&raw_s[left[i]..right[i] + 1], x); 的字符串 replace 会超时。  
+    /// 这道题用 `s = s.replace(&raw_s[left[i]..right[i] + 1], x);` 的字符串 replace 会超时。  
     /// 已发题解 48ms 26.5MB  
     /// ![](https://cdn.ftls.xyz/images/2022/12/Snipaste_2023-01-08_15-35-39.png)  
     /// <https://leetcode.cn/problems/evaluate-the-bracket-pairs-of-a-string/solution/by-kkbt-mxcr/>  
