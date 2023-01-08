@@ -427,3 +427,32 @@ fn test_reformat_number() {
         "123-456-78".to_string()
     );
 }
+
+/// 2023-01-08  
+/// 905. 按奇偶排序数组  
+/// <https://leetcode.cn/problems/sort-array-by-parity/>
+impl Solution {
+    /// 双指针
+    /// nums[i] &1  和 nums[i] %2 是等效的 看起来前者执行快但是内存消耗会大一点  
+    pub fn sort_array_by_parity(mut nums: Vec<i32>) -> Vec<i32> {
+        let (mut i, mut j) = (0usize, nums.len() - 1);
+        while i < j { 
+            while i < j && nums[i] &1 == 0   {
+                i+=1;
+            }
+            while i < j && nums[j] &1 == 1 {
+                j-=1;
+            }
+            nums.swap(i, j);
+        }
+        nums
+    }
+}
+#[test]
+fn test_sort_array_by_parity() {
+    dbg!(Solution::sort_array_by_parity(vec![3,1,2,4]));
+    dbg!(Solution::sort_array_by_parity(vec![0,2]));
+    dbg!(Solution::sort_array_by_parity(vec![0,1,2]));
+    dbg!(Solution::sort_array_by_parity(vec![0,1]));
+    dbg!(Solution::sort_array_by_parity(vec![1,3]));
+}
