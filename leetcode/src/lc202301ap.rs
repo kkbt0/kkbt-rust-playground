@@ -596,3 +596,23 @@ fn test_count_time() {
     assert_eq!(Solution::count_time(String::from("?2:16")), 3);
     assert_eq!(Solution::count_time(String::from("?4:22")), 2);
 }
+
+/// 2023-01-08  
+/// 342. 4的幂  
+/// <https://leetcode.cn/problems/power-of-four/>
+impl Solution {
+    /// 如果 n 是 4 的幂，那么它可以表示成 4^x 的形式，除以 3 的余数一定为 1  
+    /// 如果 n 是 2 的幂却不是 4 的幂，那么它可以表示成 4^x * 2 此时它除以 3 的余数一定为 2。  
+    /// 因此可以通过 n 除以 3 的余数是否为 1 来判断 n 是否是 4 的幂。  
+    pub fn is_power_of_four(n: i32) -> bool {
+        n > 0 && (n & (n - 1)) == 0 && n % 3 == 1
+    }
+    pub fn is_power_of_four2(n: i32) -> bool { // 0xaaaaaaaa 0x2aaaaaaa
+        n > 0 && (n & (n - 1)) == 0 && (n & 0x2aaaaaaa ) == 0
+    }
+}
+#[test]
+fn test_is_power_of_four() {
+    assert_eq!(Solution::is_power_of_four2(4), true);
+    assert_eq!(Solution::is_power_of_four(5), false);
+}
