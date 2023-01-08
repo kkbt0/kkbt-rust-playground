@@ -384,3 +384,46 @@ impl Cashier {
         }
     }
 }
+
+/// 2023-01-08  
+/// 1694. 重新格式化电话号码  
+/// <https://leetcode.cn/problems/reformat-phone-number/>
+impl Solution {
+    /// -1 情况移动 -  
+    /// 模拟
+    pub fn reformat_number(number: String) -> String {
+        let tel_num = number
+            .as_bytes()
+            .iter()
+            .filter(|x| (x != &&b' ') && (x != &&b'-'))
+            .collect::<Vec<_>>();
+        let mut ans = vec![*tel_num[0]];
+        for i in 1..tel_num.len() {
+            if i % 3 == 0 {
+                ans.push(b'-');
+            }
+            ans.push(*tel_num[i]);
+        }
+        // -1 情况移动 -
+        let len = ans.len();
+        if len >= 4 && ans[len - 2] == b'-' {
+            ans.swap(len - 2,len- 3);
+        }
+        String::from_utf8(ans).unwrap()
+    }
+}
+#[test]
+fn test_reformat_number() {
+    assert_eq!(
+        Solution::reformat_number("1-23-45 6".to_string()),
+        "123-456".to_string()
+    );
+    assert_eq!(
+        Solution::reformat_number("123 4-567".to_string()),
+        "123-45-67".to_string()
+    );
+    assert_eq!(
+        Solution::reformat_number("123 4-5678".to_string()),
+        "123-456-78".to_string()
+    );
+}
