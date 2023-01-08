@@ -308,3 +308,45 @@ fn test_letter_combinations() {
     dbg!(Solution::letter_combinations("".to_string()));
     dbg!(Solution::letter_combinations("2".to_string()));
 }
+
+#[derive(Debug, PartialEq, Eq)]
+pub struct TreeNode {
+    pub val: i32,
+    pub left: Option<Rc<RefCell<TreeNode>>>,
+    pub right: Option<Rc<RefCell<TreeNode>>>,
+}
+
+impl TreeNode {
+    #[inline]
+    pub fn new(val: i32) -> Self {
+        TreeNode {
+            val,
+            left: None,
+            right: None,
+        }
+    }
+}
+use std::cell::RefCell;
+use std::rc::Rc;
+/// 2023-01-08  
+/// 面试题 04.05. 合法二叉搜索树  
+/// <https://leetcode.cn/problems/legal-binary-search-tree-lcci/>
+impl Solution {
+    /// 中序遍历 判断是否单调增  
+    pub fn is_valid_bst(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
+        let mut ans = Vec::new();
+        let mut stack = Vec::new();
+        let mut root = root;
+        while !stack.is_empty() || root.is_some() {
+            while let Some(node) = root {
+                root = node.borrow_mut().left.take();
+                stack.push(node);
+            }
+            if let Some(node) = stack.pop() {
+                ans.push(node.borrow().val);
+                root = node.borrow_mut().right.take();
+            }
+        }
+        ans.windows(2).all(|x| x[0] < x[1])
+    }
+}
