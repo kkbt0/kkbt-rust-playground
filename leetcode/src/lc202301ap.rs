@@ -407,7 +407,7 @@ impl Solution {
         // -1 情况移动 -
         let len = ans.len();
         if len >= 4 && ans[len - 2] == b'-' {
-            ans.swap(len - 2,len- 3);
+            ans.swap(len - 2, len - 3);
         }
         String::from_utf8(ans).unwrap()
     }
@@ -436,12 +436,12 @@ impl Solution {
     /// nums[i] &1  和 nums[i] %2 是等效的 看起来前者执行快但是内存消耗会大一点  
     pub fn sort_array_by_parity(mut nums: Vec<i32>) -> Vec<i32> {
         let (mut i, mut j) = (0usize, nums.len() - 1);
-        while i < j { 
-            while i < j && nums[i] &1 == 0   {
-                i+=1;
+        while i < j {
+            while i < j && nums[i] & 1 == 0 {
+                i += 1;
             }
-            while i < j && nums[j] &1 == 1 {
-                j-=1;
+            while i < j && nums[j] & 1 == 1 {
+                j -= 1;
             }
             nums.swap(i, j);
         }
@@ -450,9 +450,28 @@ impl Solution {
 }
 #[test]
 fn test_sort_array_by_parity() {
-    dbg!(Solution::sort_array_by_parity(vec![3,1,2,4]));
-    dbg!(Solution::sort_array_by_parity(vec![0,2]));
-    dbg!(Solution::sort_array_by_parity(vec![0,1,2]));
-    dbg!(Solution::sort_array_by_parity(vec![0,1]));
-    dbg!(Solution::sort_array_by_parity(vec![1,3]));
+    dbg!(Solution::sort_array_by_parity(vec![3, 1, 2, 4]));
+    dbg!(Solution::sort_array_by_parity(vec![0, 2]));
+    dbg!(Solution::sort_array_by_parity(vec![0, 1, 2]));
+    dbg!(Solution::sort_array_by_parity(vec![0, 1]));
+    dbg!(Solution::sort_array_by_parity(vec![1, 3]));
+}
+
+/// 2023-01-08  
+/// 2160. 拆分数位后四位数字的最小和  
+/// <https://leetcode.cn/problems/minimum-sum-of-four-digit-number-after-splitting-digits/>
+impl Solution {
+    pub fn minimum_sum(mut num: i32) -> i32 {
+        let mut nums = [0; 4];
+        for i in 0..4 {
+            nums[i] = num % 10;
+            num /= 10;
+        }
+        nums.sort();
+        (nums[0] + nums[1]) * 10 + nums[2] +nums[3]
+    }
+}
+#[test]
+fn test_minimum_sum() {
+    assert_eq!(Solution::minimum_sum(2932), 52);
 }
