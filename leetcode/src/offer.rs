@@ -624,3 +624,23 @@ impl Solution {
         ret // ret.into_iter().flatten().collect::<Vec<i32>>()
     }
 }
+
+/// 2023-01-08  
+/// 剑指 Offer 10- I. 斐波那契数列  
+/// <https://leetcode.cn/problems/fei-bo-na-qi-shu-lie-lcof/>
+impl Solution {
+    /// Code_Description
+    pub fn fib(n: i32) -> i32 {
+        let mut dp = [0; 105];
+        dp[1] = 1;
+        for i in 2..=n as usize {
+            dp[i] = (dp[i - 1] + dp[i - 2]) % 1000000007;
+        }
+        dp[n as usize]
+    }
+}
+#[test]
+fn test_fib() {
+    assert_eq!(Solution::fib(2), 1);
+    assert_eq!(Solution::fib(5), 5);
+}
