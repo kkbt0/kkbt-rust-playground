@@ -651,12 +651,35 @@ fn test_fib() {
 impl Solution {
     /// 斐波那契数列 第 n 阶 走 1 或 2 步 就是 n-1 n-2 的 数量之和
     pub fn num_ways(n: i32) -> i32 {
-        let mut dp = [0;105];
+        let mut dp = [0; 105];
         dp[0] = 1;
         dp[1] = 1;
         for i in 2..=n as usize {
-            dp[i] = (dp[i-1] + dp[i-2])%1000000007;
+            dp[i] = (dp[i - 1] + dp[i - 2]) % 1000000007;
         }
         dp[n as usize]
     }
+}
+
+/// 2023-01-08  
+/// 剑指 Offer 63. 股票的最大利润  
+/// <https://leetcode.cn/problems/gu-piao-de-zui-da-li-run-lcof/>
+impl Solution {
+    /// Code_Description
+    pub fn max_profit(prices: Vec<i32>) -> i32 {
+        let mut max_profit = 0;
+        let mut min_price = i32::MAX;
+        for iter in prices {
+            if iter < min_price {
+                min_price = iter;
+            } else {
+                max_profit = max_profit.max(iter - min_price);
+            }
+        }
+        max_profit
+    }
+}
+#[test]
+fn test_max_profit() {
+    assert_eq!(Solution::max_profit(vec![7, 1, 5, 3, 6, 4]), 5);
 }
