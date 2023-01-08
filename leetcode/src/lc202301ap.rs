@@ -350,3 +350,37 @@ impl Solution {
         ans.windows(2).all(|x| x[0] < x[1])
     }
 }
+/// 2023-01-08  
+/// 1357. 每隔 n 个顾客打折  
+/// <https://leetcode.cn/problems/apply-discount-every-n-orders/>
+struct Cashier {
+    n: i32,
+    now_customer: i32,
+    discount: i32,
+    price: std::collections::HashMap<i32, i32>,
+}
+#[allow(dead_code)]
+impl Cashier {
+    fn new(n: i32, discount: i32, products: Vec<i32>, prices: Vec<i32>) -> Self {
+        Self {
+            n,
+            now_customer: 0,
+            discount,
+            price: products.into_iter().zip(prices.into_iter()).collect(),
+        }
+    }
+    fn get_bill(&mut self, product: Vec<i32>, amount: Vec<i32>) -> f64 {
+        self.now_customer += 1;
+        let pay = product
+            .iter()
+            .zip(amount.iter())
+            .fold(0, |acc, (product_id, this_amo)| {
+                acc + self.price[&product_id] * this_amo
+            });
+        if self.now_customer % self.n == 0 {
+            (pay as f64) * (1.0 - self.discount as f64 / 100.0)
+        } else {
+            pay as f64
+        }
+    }
+}
