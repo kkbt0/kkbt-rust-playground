@@ -69,7 +69,7 @@ fn test_convert() {
     );
     assert_eq!(Solution::convert("A".to_string(), 1), "A".to_string());
 }
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
 /// 2023-01-01  
 /// 15. 三数之和  
 /// <https://leetcode.cn/problems/3sum/>
@@ -468,10 +468,98 @@ impl Solution {
             num /= 10;
         }
         nums.sort();
-        (nums[0] + nums[1]) * 10 + nums[2] +nums[3]
+        (nums[0] + nums[1]) * 10 + nums[2] + nums[3]
     }
 }
 #[test]
 fn test_minimum_sum() {
     assert_eq!(Solution::minimum_sum(2932), 52);
+}
+/// 2023-01-08  
+/// 1807. 替换字符串中的括号内容  
+/// <https://leetcode.cn/problems/evaluate-the-bracket-pairs-of-a-string/>
+impl Solution {
+    /// 模拟，先把 knowledge 的对应关系存到 map 里。然后 Vec 存储左右括号位置，用于字符串切片。然后根据位置数据用字符串切片。  
+    /// 这道题用 s = s.replace(&raw_s[left[i]..right[i] + 1], x); 的字符串 replace 会超时。  
+    /// 已发题解 48ms 26.5MB  
+    /// ![](https://cdn.ftls.xyz/images/2022/12/Snipaste_2023-01-08_15-35-39.png)  
+    /// <https://leetcode.cn/problems/evaluate-the-bracket-pairs-of-a-string/solution/by-kkbt-mxcr/>  
+    pub fn evaluate(s: String, knowledge: Vec<Vec<String>>) -> String {
+        let map: HashMap<&str, &str> = knowledge
+            .iter()
+            .map(|x| (x[0].as_str(), x[1].as_str()))
+            .collect();
+        let (mut left, mut right) = (vec![], vec![]);
+        let sbytes = s.as_bytes();
+        // 找 () 并存储位置 用于字符串切片
+        for i in 0..s.len() {
+            if sbytes[i] == b'(' {
+                left.push(i);
+            } else if sbytes[i] == b')' {
+                right.push(i);
+            }
+        }
+        let mut start = 0;
+        let mut ans = vec![];
+        for i in 0..left.len() {
+            ans.push(&s[start..left[i]]);
+            // map.get("text") 无括号
+            if let Some(x) = map.get(&s[left[i] + 1..right[i]]) {
+                ans.push(x);
+            } else {
+                ans.push("?");
+            }
+            start = right[i] + 1;
+        }
+        ans.push(&s[start..s.len()]);
+        ans.concat()
+    }
+    /// 判题机 不支持 HashMap::from_iter  超时
+    pub fn evaluate2(mut s: String, knowledge: Vec<Vec<String>>) -> String {
+        let map: HashMap<&str, &str> = knowledge
+            .iter()
+            .map(|x| (x[0].as_str(), x[1].as_str()))
+            .collect();
+        let binding = s.clone();
+        let raw_s = binding;
+        let (mut left, mut right) = (vec![], vec![]);
+        // 找 () 并存储位置 用于字符串切片
+        for i in 0..raw_s.len() {
+            let c = raw_s.as_bytes()[i];
+            if c == b'(' {
+                left.push(i);
+            } else if c == b')' {
+                right.push(i);
+            }
+        }
+        for i in 0..left.len() {
+            // map.get("text") 无括号 s.replace 有括号
+            if let Some(x) = map.get(&raw_s[left[i] + 1..right[i]]) {
+                s = s.replace(&raw_s[left[i]..right[i] + 1], x);
+            } else {
+                s = s.replace(&raw_s[left[i]..right[i] + 1], "?");
+            }
+        }
+        s
+    }
+}
+#[test]
+fn test_solve() {
+    assert_eq!(
+        Solution::evaluate(
+            "(name)is(age)yearsold".to_string(),
+            vec![
+                vec!["name".to_string(), "bob".to_string()],
+                vec!["age".to_string(), "two".to_string()]
+            ]
+        ),
+        "bobistwoyearsold"
+    );
+    assert_eq!(
+        Solution::evaluate(
+            "hi(name)".to_string(),
+            vec![vec!["a".to_string(), "b".to_string()]]
+        ),
+        "hi?"
+    );
 }
