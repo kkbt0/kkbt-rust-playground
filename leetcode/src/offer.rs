@@ -644,3 +644,19 @@ fn test_fib() {
     assert_eq!(Solution::fib(2), 1);
     assert_eq!(Solution::fib(5), 5);
 }
+
+/// 2023-01-08  
+/// 剑指 Offer 10- II. 青蛙跳台阶问题  
+/// <https://leetcode.cn/problems/qing-wa-tiao-tai-jie-wen-ti-lcof/>
+impl Solution {
+    /// 斐波那契数列 第 n 阶 走 1 或 2 步 就是 n-1 n-2 的 数量之和
+    pub fn num_ways(n: i32) -> i32 {
+        let mut dp = [0;105];
+        dp[0] = 1;
+        dp[1] = 1;
+        for i in 2..=n as usize {
+            dp[i] = (dp[i-1] + dp[i-2])%1000000007;
+        }
+        dp[n as usize]
+    }
+}
